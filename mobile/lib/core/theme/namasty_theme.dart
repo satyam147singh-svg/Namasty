@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 /// Namasty Custom Color Palette & Extensions
-/// 100% Sky Blue (Aasmani) Theme - Zero Green
+/// Refined Darker Blue Palette (Light: #2F8FD8 / Dark: #4FA6E6) - 100% Original, Zero Green
 @immutable
 class NamastyColors extends ThemeExtension<NamastyColors> {
   final Color primary;
@@ -14,9 +14,12 @@ class NamastyColors extends ThemeExtension<NamastyColors> {
   final Color textPrimary;
   final Color textSecondary;
   final Color activePill;
+  final Color inactiveIcon;
   final Color sentBubbleStart;
   final Color sentBubbleEnd;
   final Color receivedBubble;
+  final Color appBarGradientStart;
+  final Color appBarGradientEnd;
   final Color sidebarHeaderStart;
   final Color sidebarHeaderEnd;
   final Color tickBlue;
@@ -34,9 +37,12 @@ class NamastyColors extends ThemeExtension<NamastyColors> {
     required this.textPrimary,
     required this.textSecondary,
     required this.activePill,
+    required this.inactiveIcon,
     required this.sentBubbleStart,
     required this.sentBubbleEnd,
     required this.receivedBubble,
+    required this.appBarGradientStart,
+    required this.appBarGradientEnd,
     required this.sidebarHeaderStart,
     required this.sidebarHeaderEnd,
     required this.tickBlue,
@@ -46,45 +52,51 @@ class NamastyColors extends ThemeExtension<NamastyColors> {
   });
 
   static const light = NamastyColors(
-    primary: Color(0xFF87CEEB), // Sky blue
-    primaryDark: Color(0xFF4BA3D3),
-    primaryLight: Color(0xFFE8F6FD),
-    accent: Color(0xFF5DADE2),
-    background: Color(0xFFF4FAFE),
+    primary: Color(0xFF2F8FD8), // Refined darker primary blue
+    primaryDark: Color(0xFF1B6BB0),
+    primaryLight: Color(0xFFDCEEFB), // Background tint
+    accent: Color(0xFF1E88E5),
+    background: Color(0xFFF1F7FC), // Surface/background
     surface: Colors.white,
-    textPrimary: Color(0xFF12324A), // Dark navy
-    textSecondary: Color(0xFF6B8BA4),
-    activePill: Color(0xFFD6EFFB), // Pill highlight
-    sentBubbleStart: Color(0xFF87CEEB),
-    sentBubbleEnd: Color(0xFFB3E5FC),
+    textPrimary: Color(0xFF12324A), // High contrast dark text (ratio > 4.5:1)
+    textSecondary: Color(0xFF5F7F99),
+    activePill: Color(0xFFC5E1F7), // Active tab pill
+    inactiveIcon: Color(0xFF6B8BA4),
+    sentBubbleStart: Color(0xFF2F8FD8),
+    sentBubbleEnd: Color(0xFF4FA6E6),
     receivedBubble: Colors.white,
-    sidebarHeaderStart: Color(0xFFA8DDF5),
-    sidebarHeaderEnd: Color(0xFF87CEEB),
-    tickBlue: Color(0xFF29B6F6),
-    tickGrey: Color(0xFF90A4AE),
-    cardBorder: Color(0xFFE1F0F8),
-    divider: Color(0xFFE7F3FA),
+    appBarGradientStart: Color(0xFF2F8FD8),
+    appBarGradientEnd: Color(0xFF5AAEE8),
+    sidebarHeaderStart: Color(0xFF2F8FD8),
+    sidebarHeaderEnd: Color(0xFF5AAEE8),
+    tickBlue: Colors.white,
+    tickGrey: Color(0xFF5F7F99),
+    cardBorder: Color(0xFFC9DDEE),
+    divider: Color(0xFFC9DDEE),
   );
 
   static const dark = NamastyColors(
-    primary: Color(0xFF5DADE2),
-    primaryDark: Color(0xFF3498DB),
-    primaryLight: Color(0xFF162B3D),
-    accent: Color(0xFF87CEEB),
-    background: Color(0xFF0E1A24), // Dark Navy Surface
-    surface: Color(0xFF162432),
-    textPrimary: Color(0xFFEBF5FB),
-    textSecondary: Color(0xFF8FAEC5),
+    primary: Color(0xFF4FA6E6),
+    primaryDark: Color(0xFF2F8FD8),
+    primaryLight: Color(0xFF183248),
+    accent: Color(0xFF5AAEE8),
+    background: Color(0xFF0B1620), // Dark background
+    surface: Color(0xFF132431), // Dark surface / cards
+    textPrimary: Color(0xFFE6F1FA),
+    textSecondary: Color(0xFF8FB0C9),
     activePill: Color(0xFF1B374C),
-    sentBubbleStart: Color(0xFF2E6F95),
-    sentBubbleEnd: Color(0xFF3F8AB4),
-    receivedBubble: Color(0xFF1A2B3B),
-    sidebarHeaderStart: Color(0xFF1F3D55),
-    sidebarHeaderEnd: Color(0xFF132A3B),
-    tickBlue: Color(0xFF58D2FF),
-    tickGrey: Color(0xFF78909C),
+    inactiveIcon: Color(0xFF8FB0C9),
+    sentBubbleStart: Color(0xFF1B6BB0),
+    sentBubbleEnd: Color(0xFF1B6BB0),
+    receivedBubble: Color(0xFF1A3142),
+    appBarGradientStart: Color(0xFF132431),
+    appBarGradientEnd: Color(0xFF1B374C),
+    sidebarHeaderStart: Color(0xFF132431),
+    sidebarHeaderEnd: Color(0xFF1B374C),
+    tickBlue: Color(0xFF4FA6E6),
+    tickGrey: Color(0xFF8FB0C9),
     cardBorder: Color(0xFF1F3547),
-    divider: Color(0xFF1B2E3E),
+    divider: Color(0xFF1F3547),
   );
 
   @override
@@ -98,9 +110,12 @@ class NamastyColors extends ThemeExtension<NamastyColors> {
     Color? textPrimary,
     Color? textSecondary,
     Color? activePill,
+    Color? inactiveIcon,
     Color? sentBubbleStart,
     Color? sentBubbleEnd,
     Color? receivedBubble,
+    Color? appBarGradientStart,
+    Color? appBarGradientEnd,
     Color? sidebarHeaderStart,
     Color? sidebarHeaderEnd,
     Color? tickBlue,
@@ -118,9 +133,12 @@ class NamastyColors extends ThemeExtension<NamastyColors> {
       textPrimary: textPrimary ?? this.textPrimary,
       textSecondary: textSecondary ?? this.textSecondary,
       activePill: activePill ?? this.activePill,
+      inactiveIcon: inactiveIcon ?? this.inactiveIcon,
       sentBubbleStart: sentBubbleStart ?? this.sentBubbleStart,
       sentBubbleEnd: sentBubbleEnd ?? this.sentBubbleEnd,
       receivedBubble: receivedBubble ?? this.receivedBubble,
+      appBarGradientStart: appBarGradientStart ?? this.appBarGradientStart,
+      appBarGradientEnd: appBarGradientEnd ?? this.appBarGradientEnd,
       sidebarHeaderStart: sidebarHeaderStart ?? this.sidebarHeaderStart,
       sidebarHeaderEnd: sidebarHeaderEnd ?? this.sidebarHeaderEnd,
       tickBlue: tickBlue ?? this.tickBlue,
@@ -143,9 +161,12 @@ class NamastyColors extends ThemeExtension<NamastyColors> {
       textPrimary: Color.lerp(textPrimary, other.textPrimary, t)!,
       textSecondary: Color.lerp(textSecondary, other.textSecondary, t)!,
       activePill: Color.lerp(activePill, other.activePill, t)!,
+      inactiveIcon: Color.lerp(inactiveIcon, other.inactiveIcon, t)!,
       sentBubbleStart: Color.lerp(sentBubbleStart, other.sentBubbleStart, t)!,
       sentBubbleEnd: Color.lerp(sentBubbleEnd, other.sentBubbleEnd, t)!,
       receivedBubble: Color.lerp(receivedBubble, other.receivedBubble, t)!,
+      appBarGradientStart: Color.lerp(appBarGradientStart, other.appBarGradientStart, t)!,
+      appBarGradientEnd: Color.lerp(appBarGradientEnd, other.appBarGradientEnd, t)!,
       sidebarHeaderStart: Color.lerp(sidebarHeaderStart, other.sidebarHeaderStart, t)!,
       sidebarHeaderEnd: Color.lerp(sidebarHeaderEnd, other.sidebarHeaderEnd, t)!,
       tickBlue: Color.lerp(tickBlue, other.tickBlue, t)!,
@@ -168,7 +189,7 @@ class NamastyTheme {
       primaryColor: colors.primary,
       scaffoldBackgroundColor: colors.background,
       colorScheme: ColorScheme.light(
-        primary: colors.primaryDark,
+        primary: colors.primary,
         secondary: colors.accent,
         surface: colors.surface,
         background: colors.background,
@@ -185,13 +206,14 @@ class NamastyTheme {
         labelSmall: baseFont.labelSmall?.copyWith(color: colors.textSecondary, fontSize: 12),
       ),
       appBarTheme: AppBarTheme(
-        backgroundColor: colors.surface,
+        backgroundColor: colors.primary,
         elevation: 0,
         scrolledUnderElevation: 1,
-        shadowColor: colors.primaryLight,
-        iconTheme: IconThemeData(color: colors.primaryDark),
+        shadowColor: colors.primaryDark.withOpacity(0.12),
+        iconTheme: const IconThemeData(color: Colors.white),
+        actionsIconTheme: const IconThemeData(color: Colors.white),
         titleTextStyle: GoogleFonts.poppins(
-          color: colors.textPrimary,
+          color: Colors.white,
           fontSize: 19,
           fontWeight: FontWeight.w600,
         ),
@@ -206,10 +228,18 @@ class NamastyTheme {
         ),
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: colors.primaryDark,
+        backgroundColor: colors.primary,
         foregroundColor: Colors.white,
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)), // Rounded-square
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: colors.primary,
+          foregroundColor: Colors.white,
+          elevation: 2,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
@@ -225,7 +255,7 @@ class NamastyTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(24),
-          borderSide: BorderSide(color: colors.primaryDark, width: 1.5),
+          borderSide: BorderSide(color: colors.primary, width: 1.5),
         ),
         hintStyle: TextStyle(color: colors.textSecondary.withOpacity(0.7)),
       ),
@@ -263,7 +293,8 @@ class NamastyTheme {
         backgroundColor: colors.surface,
         elevation: 0,
         scrolledUnderElevation: 1,
-        iconTheme: IconThemeData(color: colors.primary),
+        iconTheme: const IconThemeData(color: Colors.white),
+        actionsIconTheme: const IconThemeData(color: Colors.white),
         titleTextStyle: GoogleFonts.poppins(
           color: colors.textPrimary,
           fontSize: 19,
@@ -281,9 +312,17 @@ class NamastyTheme {
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: colors.primary,
-        foregroundColor: const Color(0xFF0E1A24),
+        foregroundColor: Colors.white,
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: colors.primary,
+          foregroundColor: Colors.white,
+          elevation: 2,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        ),
       ),
       extensions: const [NamastyColors.dark],
     );

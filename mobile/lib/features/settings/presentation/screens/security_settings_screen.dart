@@ -74,8 +74,8 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
             child: Column(
               children: [
                 SwitchListTile(
-                  activeColor: colors.primaryDark,
-                  secondary: Icon(Icons.fingerprint_rounded, color: colors.primaryDark),
+                  activeColor: colors.primary,
+                  secondary: Icon(Icons.fingerprint_rounded, color: colors.primary),
                   title: Text('App Lock', style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 14.5)),
                   subtitle: const Text('Unlock with Fingerprint, Face ID or PIN'),
                   value: _appLockEnabled,
@@ -88,8 +88,8 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
                 ),
                 Divider(color: colors.divider, height: 1),
                 SwitchListTile(
-                  activeColor: colors.primaryDark,
-                  secondary: Icon(Icons.no_photography_outlined, color: colors.primaryDark),
+                  activeColor: colors.primary,
+                  secondary: Icon(Icons.no_photography_outlined, color: colors.primary),
                   title: Text('Block Screenshots', style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 14.5)),
                   subtitle: const Text('Prevents taking screenshots or screen recordings inside chats'),
                   value: _blockScreenshots,
@@ -102,8 +102,8 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
                 ),
                 Divider(color: colors.divider, height: 1),
                 SwitchListTile(
-                  activeColor: colors.primaryDark,
-                  secondary: Icon(Icons.password_rounded, color: colors.primaryDark),
+                  activeColor: colors.primary,
+                  secondary: Icon(Icons.password_rounded, color: colors.primary),
                   title: Text('Two-Step Verification', style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 14.5)),
                   subtitle: const Text('Require a 6-digit PIN when registering your phone number again'),
                   value: _twoStepEnabled,

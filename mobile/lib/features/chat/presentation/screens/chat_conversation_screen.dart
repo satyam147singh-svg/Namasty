@@ -410,7 +410,7 @@ class _ChatConversationScreenState extends State<ChatConversationScreen> {
                   style: GoogleFonts.poppins(
                     fontSize: 14.5,
                     fontWeight: FontWeight.w400,
-                    color: isMe ? const Color(0xFF0F3048) : colors.textPrimary,
+                    color: isMe ? Colors.white : colors.textPrimary,
                   ),
                 ),
 
@@ -424,7 +424,7 @@ class _ChatConversationScreenState extends State<ChatConversationScreen> {
                     DateFormat('hh:mm a').format(msg.createdAt),
                     style: TextStyle(
                       fontSize: 10.5,
-                      color: isMe ? const Color(0xFF285673) : colors.textSecondary,
+                      color: isMe ? Colors.white.withOpacity(0.85) : colors.textSecondary,
                     ),
                   ),
                   if (isMe) ...[
@@ -432,7 +432,7 @@ class _ChatConversationScreenState extends State<ChatConversationScreen> {
                     Icon(
                       msg.status == MessageDeliveryStatus.read ? Icons.done_all_rounded : Icons.check_rounded,
                       size: 14,
-                      color: msg.status == MessageDeliveryStatus.read ? const Color(0xFF0077B6) : const Color(0xFF4C758F),
+                      color: Colors.white,
                     ),
                   ],
                 ],
@@ -532,7 +532,7 @@ class _ChatConversationScreenState extends State<ChatConversationScreen> {
               width: 50,
               height: 50,
               decoration: BoxDecoration(
-                color: colors.primaryDark,
+                color: colors.primary,
                 borderRadius: BorderRadius.circular(18),
                 boxShadow: [
                   BoxShadow(

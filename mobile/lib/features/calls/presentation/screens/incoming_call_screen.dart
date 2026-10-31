@@ -63,7 +63,7 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> with SingleTick
     final colors = context.namastyColors;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0E1A24), // Dark Navy Surface
+      backgroundColor: const Color(0xFF0B1620), // Dark Navy Surface
       body: SafeArea(
         child: Column(
           children: [

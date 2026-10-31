@@ -295,7 +295,7 @@ class NamastySidebarDrawer extends StatelessWidget {
             children: [
               Icon(
                 isSelected ? selectedIcon : icon,
-                color: isSelected ? colors.primaryDark : colors.textSecondary,
+                color: isSelected ? colors.primaryDark : colors.inactiveIcon,
                 size: 24,
               ),
               const SizedBox(width: 16),
@@ -305,7 +305,7 @@ class NamastySidebarDrawer extends StatelessWidget {
                   style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                    color: isSelected ? colors.textPrimary : colors.textSecondary,
+                    color: isSelected ? colors.primaryDark : colors.textSecondary,
                   ),
                 ),
               ),
@@ -313,7 +313,7 @@ class NamastySidebarDrawer extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 3),
                   decoration: BoxDecoration(
-                    color: colors.primaryDark,
+                    color: colors.primary,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(

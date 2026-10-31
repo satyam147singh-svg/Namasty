@@ -9,7 +9,7 @@ const postStatusSchema = z.object({
   content: z.string().optional(),
   mediaUrl: z.string().optional(),
   caption: z.string().max(300).optional(),
-  backgroundColor: z.string().default('#87CEEB'), // Namasty Sky Blue default
+  backgroundColor: z.string().default('#2F8FD8'), // Namasty Blue default
   fontFamily: z.string().default('Poppins'),
   privacy: z.enum(['everyone', 'contacts', 'custom']).default('contacts'),
   excludedUserIds: z.array(z.string()).optional(),

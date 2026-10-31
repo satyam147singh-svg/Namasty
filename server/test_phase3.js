@@ -29,7 +29,7 @@ async function runPhase3Tests() {
     body: JSON.stringify({
       type: 'text',
       content: 'Phase 3: WebRTC Calls & 24h Status Stories are live! 🕊️',
-      backgroundColor: '#87CEEB',
+      backgroundColor: '#2F8FD8',
       fontFamily: 'Poppins',
       privacy: 'contacts',
     }),

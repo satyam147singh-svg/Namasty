@@ -13,10 +13,10 @@ class _CreateStatusScreenState extends State<CreateStatusScreen> {
   final TextEditingController _textController = TextEditingController();
 
   final List<Color> _palette = const [
-    Color(0xFF87CEEB), // Namasty Sky Blue
-    Color(0xFF4BA3D3), // Primary Dark
-    Color(0xFF0E1A24), // Dark Navy
-    Color(0xFF5DADE2), // Accent
+    Color(0xFF2F8FD8), // Primary
+    Color(0xFF1B6BB0), // Primary Dark
+    Color(0xFF0B1620), // Dark Navy
+    Color(0xFF1E88E5), // Accent
     Color(0xFF6C5CE7), // Lavender
     Color(0xFFE17055), // Sunset Coral
   ];

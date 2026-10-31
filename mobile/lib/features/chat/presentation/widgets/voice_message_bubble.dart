@@ -113,7 +113,7 @@ class _VoiceMessageBubbleState extends State<VoiceMessageBubble> {
                               height: barHeight.clamp(4.0, 32.0),
                               decoration: BoxDecoration(
                                 color: isPlayed
-                                    ? (widget.isMe ? const Color(0xFF0F3048) : colors.primaryDark)
+                                    ? (widget.isMe ? Colors.white : colors.primaryDark)
                                     : (widget.isMe ? Colors.white.withOpacity(0.45) : colors.cardBorder),
                                 borderRadius: BorderRadius.circular(4),
                               ),
@@ -131,7 +131,7 @@ class _VoiceMessageBubbleState extends State<VoiceMessageBubble> {
                           style: GoogleFonts.poppins(
                             fontSize: 11,
                             fontWeight: FontWeight.w500,
-                            color: widget.isMe ? const Color(0xFF1E4864) : colors.textSecondary,
+                            color: widget.isMe ? Colors.white : colors.textSecondary,
                           ),
                         ),
                         // Playback Speed Toggle (1x, 1.5x, 2x)
@@ -140,7 +140,7 @@ class _VoiceMessageBubbleState extends State<VoiceMessageBubble> {
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1.5),
                             decoration: BoxDecoration(
-                              color: widget.isMe ? Colors.white.withOpacity(0.3) : colors.primaryLight,
+                              color: widget.isMe ? Colors.white.withOpacity(0.9) : colors.primaryLight,
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Text(
@@ -148,7 +148,7 @@ class _VoiceMessageBubbleState extends State<VoiceMessageBubble> {
                               style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
-                                color: widget.isMe ? const Color(0xFF0F3048) : colors.primaryDark,
+                                color: widget.isMe ? colors.primaryDark : colors.primaryDark,
                               ),
                             ),
                           ),

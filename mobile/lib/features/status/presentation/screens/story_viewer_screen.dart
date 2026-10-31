@@ -20,7 +20,7 @@ class StoryItem {
     this.content,
     this.mediaUrl,
     this.caption,
-    this.backgroundColor = const Color(0xFF87CEEB),
+    this.backgroundColor = const Color(0xFF2F8FD8),
     required this.timeAgo,
     this.viewers = const [],
   });

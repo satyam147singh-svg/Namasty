@@ -21,12 +21,12 @@
 3. **Flutter Mobile Client (iOS / Android / Tablet / Desktop)**
    - Clean Architecture in `mobile/`.
    - **Sky Blue (Aasmani) Theme System** (`mobile/lib/core/theme/namasty_theme.dart`):
-     - Primary: `#87CEEB` (Sky Blue)
-     - Primary dark: `#4BA3D3`
-     - Background tint: `#E8F6FD`
-     - Surface: `#F4FAFE` (Light mode) / `#0E1A24` (Dark mode)
-     - Active sidebar item pill highlight: `#D6EFFB`
-     - Sent message bubbles: Sky blue gradient (`#87CEEB` to `#B3E5FC`)
+     - Primary: `#2F8FD8` (Sky Blue)
+     - Primary dark: `#1B6BB0`
+     - Background tint: `#DCEEFB`
+     - Surface: `#F1F7FC` (Light mode) / `#0B1620` (Dark mode)
+     - Active sidebar item pill highlight: `#C5E1F7`
+     - Sent message bubbles: Sky blue gradient (`#2F8FD8` to `#4FA6E6`)
      - Received bubbles: Clean white with soft shadow
      - Zero green anywhere in the application.
    - **Original Vector Brand Identity**:
@@ -40,7 +40,7 @@
        3. Groups
        4. Calls
        5. Profile
-     - Active item highlighted with `#D6EFFB` pill background.
+     - Active item highlighted with `#C5E1F7` pill background.
      - Swipe-left, tap-outside or tap toggle to close.
      - Responsive Rail mode for tablets and desktop screens.
      - Rounded-square Floating Action Button (FAB).
@@ -148,7 +148,7 @@ flutter run
 ## 🌟 Deliverables Completed in Phase 3
 
 1. **24-Hour Disappearing Status Stories (Sidebar Option 2)**
-   - **Text & Media Status Composer:** Text composer with palette picker (Namasty Sky Blue `#87CEEB`, Dark Navy `#0E1A24`, Primary Dark `#4BA3D3`, Coral, Lavender) and privacy controls (`mobile/lib/features/status/presentation/screens/create_status_screen.dart`).
+   - **Text & Media Status Composer:** Text composer with palette picker (Namasty Sky Blue `#2F8FD8`, Dark Navy `#0B1620`, Primary Dark `#1B6BB0`, Coral, Lavender) and privacy controls (`mobile/lib/features/status/presentation/screens/create_status_screen.dart`).
    - **Story Viewer Screen:** Full-screen viewer with segmented top progress bars (5s auto-advance, hold to pause, tap left/right to navigate, swipe-up for viewers sheet) (`mobile/lib/features/status/presentation/screens/story_viewer_screen.dart`).
    - **Viewers List (Seen-By):** Tracks who viewed the status with timestamps.
    - **24-Hour MongoDB TTL Auto-Purge:** Mongoose index `{ expiresAt: 1 }, { expireAfterSeconds: 0 }` automatically purges expired stories (`server/src/models/status.model.ts`).

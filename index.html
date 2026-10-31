@@ -10,36 +10,36 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #87CEEB;
-      --primary-dark: #4BA3D3;
-      --primary-light: #E8F6FD;
-      --accent: #5DADE2;
+      --primary: #2F8FD8;
+      --primary-dark: #1B6BB0;
+      --primary-light: #DCEEFB;
+      --accent: #1E88E5;
       --surface-light: #FFFFFF;
-      --bg-light: #F4FAFE;
+      --bg-light: #F1F7FC;
       --text-main: #12324A;
-      --text-muted: #6B8BA4;
-      --border-color: #E1F0F8;
-      --active-pill: #D6EFFB;
-      --bubble-sent-start: #87CEEB;
-      --bubble-sent-end: #B3E5FC;
+      --text-muted: #5F7F99;
+      --border-color: #C9DDEE;
+      --active-pill: #C5E1F7;
+      --bubble-sent-start: #2F8FD8;
+      --bubble-sent-end: #4FA6E6;
       --bubble-received: #FFFFFF;
       --danger: #FF5A5F;
       --success: #34C759;
-      --shadow-sm: 0 2px 8px rgba(75, 163, 211, 0.08);
-      --shadow-md: 0 8px 24px rgba(75, 163, 211, 0.15);
+      --shadow-sm: 0 2px 8px rgba(47, 143, 216, 0.08);
+      --shadow-md: 0 8px 24px rgba(47, 143, 216, 0.15);
       --shadow-lg: 0 16px 40px rgba(18, 50, 74, 0.18);
     }
 
     [data-theme="dark"] {
-      --surface-light: #162633;
-      --bg-light: #0E1A24;
-      --text-main: #EAF4FA;
-      --text-muted: #8AA4B8;
-      --border-color: #1F3344;
-      --active-pill: #1C3549;
-      --bubble-sent-start: #357A9E;
-      --bubble-sent-end: #4BA3D3;
-      --bubble-received: #1E3345;
+      --surface-light: #132431;
+      --bg-light: #0B1620;
+      --text-main: #E6F1FA;
+      --text-muted: #8FB0C9;
+      --border-color: #1F3547;
+      --active-pill: #1B374C;
+      --bubble-sent-start: #1B6BB0;
+      --bubble-sent-end: #1B6BB0;
+      --bubble-received: #1A3142;
     }
 
     * {
@@ -83,12 +83,12 @@
     .demo-logo-badge {
       width: 38px;
       height: 38px;
-      background: linear-gradient(135deg, #87CEEB, #4BA3D3);
+      background: linear-gradient(135deg, #5AAEE8, #1B6BB0);
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 12px rgba(75, 163, 211, 0.4);
+      box-shadow: 0 4px 12px rgba(47, 143, 216, 0.4);
     }
 
     .demo-title h1 {
@@ -103,7 +103,7 @@
 
     .demo-title p {
       font-size: 11px;
-      color: #87CEEB;
+      color: #5AAEE8;
       font-weight: 500;
     }
 
@@ -263,7 +263,7 @@
     }
 
     .drawer-header {
-      background: linear-gradient(135deg, #87CEEB, #4BA3D3);
+      background: linear-gradient(135deg, #2F8FD8, #5AAEE8);
       padding: 34px 20px 20px 20px;
       color: white;
       position: relative;
@@ -612,7 +612,7 @@
       right: 20px;
       width: 54px;
       height: 54px;
-      background: linear-gradient(135deg, #87CEEB, #4BA3D3);
+      background: var(--primary);
       border-radius: 18px;
       color: white;
       border: none;
@@ -620,7 +620,7 @@
       align-items: center;
       justify-content: center;
       font-size: 22px;
-      box-shadow: 0 8px 20px rgba(75, 163, 211, 0.4);
+      box-shadow: 0 8px 20px rgba(47, 143, 216, 0.4);
       cursor: pointer;
       z-index: 20;
       transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -682,7 +682,7 @@
       width: 40px;
       height: 40px;
       border-radius: 14px;
-      background: linear-gradient(135deg, #A8DDF5, #4BA3D3);
+      background: linear-gradient(135deg, #5AAEE8, #1B6BB0);
       color: white;
       display: flex;
       align-items: center;
@@ -750,9 +750,9 @@
     .msg-sent {
       align-self: flex-end;
       background: linear-gradient(135deg, var(--bubble-sent-start), var(--bubble-sent-end));
-      color: #0E293F;
+      color: #FFFFFF;
       border-bottom-right-radius: 4px;
-      box-shadow: 0 4px 12px rgba(75, 163, 211, 0.2);
+      box-shadow: 0 4px 12px rgba(47, 143, 216, 0.2);
     }
 
     .msg-meta {
@@ -762,7 +762,8 @@
       gap: 4px;
       font-size: 10px;
       margin-top: 4px;
-      opacity: 0.8;
+      opacity: 0.9;
+      color: inherit;
     }
 
     /* Voice Note Bubble */
@@ -776,8 +777,8 @@
       width: 36px;
       height: 36px;
       border-radius: 50%;
-      background: #0E293F;
-      color: white;
+      background: #FFFFFF;
+      color: var(--primary-dark);
       border: none;
       display: flex;
       align-items: center;
@@ -794,15 +795,19 @@
     }
     .wave-bar {
       width: 3px;
-      background: #0E293F;
+      background: #FFFFFF;
       border-radius: 3px;
       transition: height 0.15s ease;
     }
     .speed-tag {
-      background: rgba(14, 41, 63, 0.15);
+      background: rgba(255, 255, 255, 0.25);
+      color: #FFFFFF;
       border-radius: 8px;
       padding: 2px 6px;
       font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+    }
       font-weight: 600;
       cursor: pointer;
     }
@@ -839,14 +844,14 @@
       width: 44px;
       height: 44px;
       border-radius: 14px;
-      background: linear-gradient(135deg, #87CEEB, #4BA3D3);
+      background: var(--primary);
       border: none;
       color: white;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(75, 163, 211, 0.35);
+      box-shadow: 0 4px 12px rgba(47, 143, 216, 0.35);
       font-size: 16px;
     }
 
@@ -950,14 +955,14 @@
       width: 90px;
       height: 90px;
       border-radius: 28px;
-      background: linear-gradient(135deg, #87CEEB, #4BA3D3);
+      background: linear-gradient(135deg, #2F8FD8, #1B6BB0);
       color: white;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 34px;
       font-weight: 700;
-      box-shadow: 0 8px 24px rgba(75, 163, 211, 0.35);
+      box-shadow: 0 8px 24px rgba(47, 143, 216, 0.35);
       margin-bottom: 16px;
     }
     .profile-info-card {
@@ -984,7 +989,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: #0E1A24;
+      background: #0B1620;
       z-index: 150;
       display: none;
       flex-direction: column;
@@ -1009,7 +1014,7 @@
     .progress-fill {
       height: 100%;
       width: 0%;
-      background: #87CEEB;
+      background: #2F8FD8;
       transition: width 0.1s linear;
     }
     .story-user-header {
@@ -1219,7 +1224,7 @@
               <!-- Chat 2: Rohan Verma -->
               <div class="chat-card" onclick="openConversation('Rohan Verma', 'Last seen today at 9:15 AM', 'RV')">
                 <div class="chat-avatar-wrap">
-                  <div class="chat-avatar" style="background:linear-gradient(135deg, #87CEEB, #5DADE2);">RV</div>
+                  <div class="chat-avatar" style="background:linear-gradient(135deg, #2F8FD8, #1E88E5);">RV</div>
                 </div>
                 <div class="chat-info">
                   <div class="chat-header-row">
@@ -1236,7 +1241,7 @@
               <!-- Chat 3: Tech Innovators India -->
               <div class="chat-card" onclick="openConversation('Tech Innovators 🇮🇳', '842 members', 'TI')">
                 <div class="chat-avatar-wrap">
-                  <div class="chat-avatar" style="background:linear-gradient(135deg, #5DADE2, #4BA3D3);">👥</div>
+                  <div class="chat-avatar" style="background:linear-gradient(135deg, #1E88E5, #1B6BB0);">👥</div>
                 </div>
                 <div class="chat-info">
                   <div class="chat-header-row">
@@ -1285,7 +1290,7 @@
 
               <div class="chat-card" onclick="launchStatusViewer('Rohan Verma', '2h ago', 'Namasty WebRTC video calls are buttery smooth! 📹')">
                 <div class="chat-avatar-wrap">
-                  <div class="chat-avatar" style="background:linear-gradient(135deg, #87CEEB, #4BA3D3);">RV</div>
+                  <div class="chat-avatar" style="background:linear-gradient(135deg, #2F8FD8, #1B6BB0);">RV</div>
                   <div class="status-ring"></div>
                 </div>
                 <div class="chat-info">
@@ -1314,7 +1319,7 @@
 
               <div class="chat-card" onclick="openConversation('Bangalore Flutter Devs', '312 members', 'BF')">
                 <div class="chat-avatar-wrap">
-                  <div class="chat-avatar" style="background:linear-gradient(135deg, #87CEEB, #5DADE2);">💻</div>
+                  <div class="chat-avatar" style="background:linear-gradient(135deg, #2F8FD8, #1E88E5);">💻</div>
                 </div>
                 <div class="chat-info">
                   <div class="chat-header-row">
@@ -1347,7 +1352,7 @@
               </div>
 
               <div class="call-log-card">
-                <div class="chat-avatar" style="background:linear-gradient(135deg, #87CEEB, #5DADE2);">RV</div>
+                <div class="chat-avatar" style="background:linear-gradient(135deg, #2F8FD8, #1E88E5);">RV</div>
                 <div style="flex:1;">
                   <h4 style="font-size:15px; font-weight:600;">Rohan Verma</h4>
                   <p style="font-size:12px; color:var(--danger);">Missed Voice Call • Yesterday</p>

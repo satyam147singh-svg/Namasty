@@ -36,7 +36,7 @@ const StatusSchema = new Schema<IStatus>(
     content: { type: String },
     mediaUrl: { type: String },
     caption: { type: String },
-    backgroundColor: { type: String, default: '#87CEEB' }, // Default Namasty Sky Blue
+    backgroundColor: { type: String, default: '#2F8FD8' }, // Default Namasty Blue
     fontFamily: { type: String, default: 'Poppins' },
     viewers: [StatusViewerSchema],
     privacy: { type: String, enum: ['everyone', 'contacts', 'custom'], default: 'contacts' },

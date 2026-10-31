@@ -79,7 +79,7 @@ class _ChatBackupScreenState extends State<ChatBackupScreen> {
                       : const Icon(Icons.backup_rounded, size: 18),
                   label: Text(_isBackingUp ? 'Backing up...' : 'Back Up Now'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: colors.primaryDark,
+                    backgroundColor: colors.primary,
                     foregroundColor: Colors.white,
                     minimumSize: const Size(double.infinity, 48),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),

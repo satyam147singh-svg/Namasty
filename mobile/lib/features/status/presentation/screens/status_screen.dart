@@ -28,7 +28,7 @@ class _StatusScreenState extends State<StatusScreen> {
         StoryItem(
           id: 's-1',
           content: 'Sky blue skies & peaceful vibes ☁️ Loving the new Namasty design!',
-          backgroundColor: const Color(0xFF4BA3D3),
+          backgroundColor: const Color(0xFF2F8FD8),
           timeAgo: '35 minutes ago',
         ),
       ],
