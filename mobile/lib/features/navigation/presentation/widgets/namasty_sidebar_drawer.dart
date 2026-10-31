@@ -4,6 +4,7 @@ import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/namasty_theme.dart';
 import '../../../../core/widgets/namasty_avatar.dart';
 import '../../../../core/widgets/namasty_logo.dart';
+import '../../../settings/presentation/screens/settings_screen.dart';
 import '../../domain/navigation_item.dart';
 
 class NamastySidebarDrawer extends StatelessWidget {
@@ -117,8 +118,9 @@ class NamastySidebarDrawer extends StatelessWidget {
                     icon: Icons.settings_outlined,
                     onTap: () {
                       onClose?.call();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Settings (Phase 4)')),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const SettingsScreen()),
                       );
                     },
                   ),
