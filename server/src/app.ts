@@ -1,0 +1,49 @@
+import express, { Application, Request, Response } from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import path from 'path';
+import authRoutes from './routes/auth.routes';
+import userRoutes from './routes/user.routes';
+import chatRoutes from './routes/chat.routes';
+import mediaRoutes from './routes/media.routes';
+import groupRoutes from './routes/group.routes';
+import { StorageService } from './services/storage.service';
+
+export const createApp = (): Application => {
+  const app = express();
+
+  // Security and utilities
+  app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
+  app.use(cors({ origin: '*', credentials: true }));
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+  app.use(morgan('dev'));
+
+  // Static uploads directory
+  app.use('/uploads', express.static(StorageService.getUploadsPath()));
+
+  // Health check endpoint
+  app.get('/health', (_req: Request, res: Response) => {
+    res.status(200).json({
+      status: 'UP',
+      app: 'Namasty - Messenger API',
+      tagline: 'Namasty! Baat karo, dil se.',
+      timestamp: new Date().toISOString(),
+    });
+  });
+
+  // REST API routes
+  app.use('/api/v1/auth', authRoutes);
+  app.use('/api/v1/users', userRoutes);
+  app.use('/api/v1/chats', chatRoutes);
+  app.use('/api/v1/media', mediaRoutes);
+  app.use('/api/v1/groups', groupRoutes);
+
+  // 404 handler
+  app.use((_req: Request, res: Response) => {
+    res.status(404).json({ success: false, message: 'Resource not found' });
+  });
+
+  return app;
+};

@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  # Namasty Node.js Backend API & Socket Server
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: namasty_server
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - NODE_ENV=production
+      - JWT_SECRET=namasty_sky_blue_secret_key_2026_super_secure
+      - JWT_REFRESH_SECRET=namasty_sky_blue_refresh_token_secret_2026
+      # For local MongoDB container:
+      - MONGODB_URI=mongodb://mongo:27017/namasty_messenger
+      # For MongoDB Atlas (replace in production .env):
+      # - MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.namasty.mongodb.net/namasty_messenger?retryWrites=true&w=majority
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CLIENT_ORIGIN=*
+    depends_on:
+      - mongo
+      - redis
+    volumes:
+      - namasty_uploads:/app/uploads
+
+  # Local MongoDB Database (Can be swapped with MongoDB Atlas)
+  mongo:
+    image: mongo:7.0
+    container_name: namasty_mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - namasty_mongo_data:/data/db
+
+  # Redis for Presence, Typing, OTP Cache & Socket.IO Pub/Sub
+  redis:
+    image: redis:7.2-alpine
+    container_name: namasty_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - namasty_redis_data:/data
+
+volumes:
+  namasty_mongo_data:
+  namasty_redis_data:
+  namasty_uploads:

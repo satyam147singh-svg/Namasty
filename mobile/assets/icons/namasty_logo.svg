@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="skyBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A8DDF5" />
+      <stop offset="60%" stop-color="#87CEEB" />
+      <stop offset="100%" stop-color="#4BA3D3" />
+    </linearGradient>
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#4BA3D3" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Sky Blue Chat Bubble -->
+  <path d="M 120 70 
+           L 380 70 
+           A 90 90 0 0 1 470 160 
+           L 470 300 
+           A 90 90 0 0 1 380 390 
+           L 180 390 
+           C 140 430, 90 450, 50 455 
+           C 75 425, 90 395, 90 390 
+           A 90 90 0 0 1 30 300 
+           L 30 160 
+           A 90 90 0 0 1 120 70 Z" 
+        fill="url(#skyBlueGrad)" 
+        filter="url(#softGlow)"/>
+
+  <!-- Folded Hands (Namaste / Anjali Mudra) Symbol in White -->
+  <g fill="#FFFFFF" transform="translate(250, 240)">
+    <!-- Left Hand -->
+    <path d="M -8 80 
+             L -30 20 
+             C -45 -15, -30 -60, -5 -75 
+             C -2 -77, 0 -76, 0 -74 
+             L 0 80 Z" opacity="0.95"/>
+    
+    <!-- Right Hand -->
+    <path d="M 8 80 
+             L 30 20 
+             C 45 -15, 30 -60, 5 -75 
+             C 2 -77, 0 -76, 0 -74 
+             L 0 80 Z" opacity="0.95"/>
+
+    <!-- Subtle Palm Seam / Light Reflection -->
+    <line x1="0" y1="-74" x2="0" y2="80" stroke="#4BA3D3" stroke-width="4" stroke-linecap="round"/>
+  </g>
+</svg>
