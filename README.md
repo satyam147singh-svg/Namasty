@@ -145,6 +145,53 @@ flutter run
 
 ---
 
-## 📋 What's Coming in Phase 3
-- **Status (Sidebar option 2):** Text, image, and video 24h disappearing status stories, viewers list, privacy controls.
-- **WebRTC Voice & Video Calls (Sidebar option 4):** 1-to-1 and group calls (up to 8 participants), signaling server, call history, incoming call screen.
+## 🌟 Deliverables Completed in Phase 3
+
+1. **24-Hour Disappearing Status Stories (Sidebar Option 2)**
+   - **Text & Media Status Composer:** Text composer with palette picker (Namasty Sky Blue `#87CEEB`, Dark Navy `#0E1A24`, Primary Dark `#4BA3D3`, Coral, Lavender) and privacy controls (`mobile/lib/features/status/presentation/screens/create_status_screen.dart`).
+   - **Story Viewer Screen:** Full-screen viewer with segmented top progress bars (5s auto-advance, hold to pause, tap left/right to navigate, swipe-up for viewers sheet) (`mobile/lib/features/status/presentation/screens/story_viewer_screen.dart`).
+   - **Viewers List (Seen-By):** Tracks who viewed the status with timestamps.
+   - **24-Hour MongoDB TTL Auto-Purge:** Mongoose index `{ expiresAt: 1 }, { expireAfterSeconds: 0 }` automatically purges expired stories (`server/src/models/status.model.ts`).
+   - **Sky Blue Ring Indicators:** Unviewed stories display a sky blue border ring around contact avatars.
+
+2. **WebRTC Voice & Video Calling (Sidebar Option 4)**
+   - **Active Voice & Video Call Screen:** Controls to mute mic, toggle speaker, switch front/rear camera, toggle video off/on, end call (`mobile/lib/features/calls/presentation/screens/active_call_screen.dart`).
+   - **Group Calls (Up to 8 Participants):** Split video grid accommodating up to 8 live peer connections with PiP preview for self.
+   - **Incoming Call Screen:** Full-screen incoming call notification with pulsing sky blue ripple waves, caller details, and accept/decline buttons (`mobile/lib/features/calls/presentation/screens/incoming_call_screen.dart`).
+   - **WebRTC Signaling Gateway:** Socket.IO signaling server managing SDP offers, answers, Trickle ICE candidates, and group call rooms (`server/src/sockets/call.socket.ts`).
+   - **STUN & TURN Server Config:** Endpoint returning Google STUN and Coturn TURN configurations for peer NAT traversal (`server/src/controllers/call.controller.ts`).
+   - **Call History:** Comprehensive call logs (incoming, outgoing, missed with red arrow indicator) and one-tap call back action (`mobile/lib/features/calls/presentation/screens/calls_screen.dart`).
+
+---
+
+## 🚀 How to Run and Test Phase 3
+
+### 1. Run Automated Phase 3 Backend Verification
+```bash
+cd server
+node test_phase3.js
+```
+*Tests 24h status creation with MongoDB TTL, status feed retrieval, WebRTC ICE servers configuration, call logging, and call history retrieval.*
+
+### 2. Test in the Flutter App
+```bash
+cd mobile
+flutter run
+```
+1. **Status Stories:**
+   - Tap **Status** (Sidebar Option 2).
+   - Tap **"My Status"** or the pen FAB to compose a text status with the sky blue color palette.
+   - Tap on any contact status to view the story viewer with top segmented progress bars. Hold to pause, swipe up to view viewers.
+2. **WebRTC Voice & Video Calls:**
+   - Tap **Calls** (Sidebar Option 4).
+   - Tap the ring icon at the top or the FAB to **Simulate Incoming Call** (tests full-screen incoming call UI with pulsing waves).
+   - Tap **Accept** to enter the **Active Call Screen**: test mute, speaker, camera flip, and end call.
+   - Tap **"Start Group Video Call"** to test the 8-participant split video grid.
+
+---
+
+## 📋 What's Coming in Phase 4
+- **End-to-End Encryption (Signal Protocol):** Double Ratchet algorithm, Pre-Key bundles, encrypted media envelopes.
+- **Chat Backup & Restore:** Encrypted local & cloud backup.
+- **Settings & Security:** Biometric app lock (fingerprint / face ID), two-step verification, screenshot blocking, notification sound controls.
+- **Web Admin Dashboard:** User moderation, spam reports review, platform analytics.

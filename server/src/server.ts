@@ -4,6 +4,7 @@ import { createApp } from './app';
 import { config } from './config';
 import { connectDatabase } from './database/db';
 import { setupSocketHandlers } from './sockets/chat.socket';
+import { setupCallSocketHandlers } from './sockets/call.socket';
 
 const startServer = async () => {
   // Connect to MongoDB
@@ -23,8 +24,9 @@ const startServer = async () => {
     pingInterval: 25000,
   });
 
-  // Attach socket handlers
+  // Attach real-time messaging & WebRTC signaling handlers
   setupSocketHandlers(io);
+  setupCallSocketHandlers(io);
 
   server.listen(config.port, () => {
     console.log(`

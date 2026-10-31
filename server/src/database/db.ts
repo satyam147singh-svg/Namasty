@@ -13,6 +13,7 @@ export const connectDatabase = async (): Promise<void> => {
     console.log(`[DATABASE] MongoDB Connected Successfully: ${config.mongoUri}`);
     await seedMongoDatabase();
   } catch (error: any) {
+    mongoose.set('bufferCommands', false);
     console.warn(`[DATABASE] MongoDB connection warning: ${error.message}`);
     if (config.useInMemoryFallback) {
       console.log('[DATABASE] Running in resilient InMemory + Mongoose Sandbox mode.');
