@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/theme/namasty_theme.dart';
 import '../../../../core/widgets/namasty_avatar.dart';
+import '../../../../core/widgets/namasty_logo.dart';
 import 'create_status_screen.dart';
 import 'story_viewer_screen.dart';
 
 class StatusScreen extends StatefulWidget {
-  final VoidCallback onOpenSidebar;
-
-  const StatusScreen({super.key, required this.onOpenSidebar});
+  const StatusScreen({super.key});
 
   @override
   State<StatusScreen> createState() => _StatusScreenState();
@@ -131,20 +130,18 @@ class _StatusScreenState extends State<StatusScreen> {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.menu_rounded, color: colors.primaryDark, size: 26),
-          onPressed: widget.onOpenSidebar,
-        ),
-        title: Text('Status Stories', style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
+        titleSpacing: 16,
+        title: const NamastyLogo(size: 34, wordmarkSize: 20, isDarkBackground: true),
         actions: [
           IconButton(
-            icon: Icon(Icons.more_vert_rounded, color: colors.primaryDark),
+            icon: const Icon(Icons.more_vert_rounded, color: Colors.white),
             onPressed: () {},
           ),
+          const SizedBox(width: 4),
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        padding: const EdgeInsets.fromLTRB(14, 12, 14, 96),
         children: [
           // My Status Card
           Material(

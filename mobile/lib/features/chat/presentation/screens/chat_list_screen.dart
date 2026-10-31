@@ -7,12 +7,7 @@ import '../widgets/chat_card.dart';
 import 'chat_conversation_screen.dart';
 
 class ChatListScreen extends StatefulWidget {
-  final VoidCallback onOpenSidebar;
-
-  const ChatListScreen({
-    super.key,
-    required this.onOpenSidebar,
-  });
+  const ChatListScreen({super.key});
 
   @override
   State<ChatListScreen> createState() => _ChatListScreenState();
@@ -153,21 +148,16 @@ class _ChatListScreenState extends State<ChatListScreen> {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: AppBar(
-        titleSpacing: 0,
-        leading: IconButton(
-          icon: Icon(Icons.menu_rounded, color: colors.primaryDark, size: 26),
-          onPressed: widget.onOpenSidebar, // Toggle button opening animated sidebar
-          tooltip: 'Open Namasty menu',
-        ),
-        title: const NamastyLogo(size: 34, wordmarkSize: 21),
+        titleSpacing: 16,
+        title: const NamastyLogo(size: 34, wordmarkSize: 21, isDarkBackground: true),
         actions: [
           IconButton(
-            icon: Icon(Icons.qr_code_scanner_rounded, color: colors.primaryDark),
+            icon: const Icon(Icons.qr_code_scanner_rounded, color: Colors.white),
             onPressed: () {},
             tooltip: 'QR Code scanner',
           ),
           IconButton(
-            icon: Icon(Icons.more_vert_rounded, color: colors.primaryDark),
+            icon: const Icon(Icons.more_vert_rounded, color: Colors.white),
             onPressed: () {},
           ),
           const SizedBox(width: 4),
@@ -224,7 +214,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                     ),
                   )
                 : ListView.builder(
-                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    padding: const EdgeInsets.fromLTRB(0, 6, 0, 96),
                     itemCount: filtered.length,
                     itemBuilder: (context, index) {
                       final chat = filtered[index];

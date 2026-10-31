@@ -1,144 +1,140 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/namasty_theme.dart';
+import '../../../calls/presentation/screens/calls_screen.dart';
+import '../../../chat/presentation/screens/chat_list_screen.dart';
+import '../../../groups/presentation/screens/create_group_screen.dart';
+import '../../../groups/presentation/screens/groups_screen.dart';
+import '../../../profile/presentation/screens/profile_screen.dart';
+import '../../../status/presentation/screens/create_status_screen.dart';
+import '../../../status/presentation/screens/status_screen.dart';
 import '../../domain/navigation_item.dart';
-import 'namasty_sidebar_drawer.dart';
+import 'namasty_bottom_nav_bar.dart';
 
+/// Main Shell Screen with Floating Pill Bottom Navigation Bar & IndexedStack
+/// Maintains state & scroll position for all 5 tabs. No drawer or hamburger menu.
 class NamastyShell extends StatefulWidget {
-  final Widget Function(SidebarOption currentOption, VoidCallback openSidebar) screenBuilder;
-  final Widget? Function(SidebarOption currentOption)? fabBuilder;
+  final int initialIndex;
 
   const NamastyShell({
     super.key,
-    required this.screenBuilder,
-    this.fabBuilder,
+    this.initialIndex = 0,
   });
 
   @override
   State<NamastyShell> createState() => _NamastyShellState();
 }
 
-class _NamastyShellState extends State<NamastyShell> with SingleTickerProviderStateMixin {
-  SidebarOption _currentOption = SidebarOption.chats;
-  late AnimationController _sidebarController;
-  late Animation<double> _slideAnimation;
+class _NamastyShellState extends State<NamastyShell> {
+  late int _currentIndex;
 
   @override
   void initState() {
     super.initState();
-    _sidebarController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 280),
-    );
-    _slideAnimation = CurvedAnimation(
-      parent: _sidebarController,
-      curve: Curves.easeOutCubic,
-      reverseCurve: Curves.easeInCubic,
-    );
+    _currentIndex = widget.initialIndex;
   }
 
-  @override
-  void dispose() {
-    _sidebarController.dispose();
-    super.dispose();
-  }
-
-  void _toggleSidebar() {
-    if (_sidebarController.isCompleted) {
-      _sidebarController.reverse();
-    } else {
-      _sidebarController.forward();
+  void _onTabSelected(int index) {
+    if (_currentIndex != index) {
+      setState(() {
+        _currentIndex = index;
+      });
     }
-  }
-
-  void _closeSidebar() {
-    if (_sidebarController.isCompleted || _sidebarController.isAnimating) {
-      _sidebarController.reverse();
-    }
-  }
-
-  void _onSelectOption(SidebarOption option) {
-    setState(() {
-      _currentOption = option;
-    });
-    _closeSidebar();
   }
 
   @override
   Widget build(BuildContext context) {
     final colors = context.namastyColors;
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isTablet = screenWidth >= 800;
 
-    if (isTablet) {
-      // Tablet / Desktop layout with permanent side rail
-      return Scaffold(
-        body: Row(
-          children: [
-            NamastySidebarDrawer(
-              currentOption: _currentOption,
-              onSelectOption: _onSelectOption,
-              isRailMode: true,
-            ),
-            Expanded(
-              child: widget.screenBuilder(_currentOption, _toggleSidebar),
-            ),
-          ],
-        ),
-        floatingActionButton: widget.fabBuilder?.call(_currentOption),
-      );
-    }
-
-    // Mobile layout with animated slide-in drawer
     return Scaffold(
-      body: Stack(
-        children: [
-          // 1. Full width Active Screen
-          widget.screenBuilder(_currentOption, _toggleSidebar),
-
-          // 2. Dimmed barrier overlay
-          AnimatedBuilder(
-            animation: _slideAnimation,
-            builder: (context, child) {
-              if (_slideAnimation.value == 0) return const SizedBox.shrink();
-              return Positioned.fill(
-                child: GestureDetector(
-                  onTap: _closeSidebar,
-                  behavior: HitTestBehavior.opaque,
-                  child: Container(
-                    color: Colors.black.withOpacity(_slideAnimation.value * 0.4),
-                  ),
-                ),
-              );
-            },
-          ),
-
-          // 3. Smooth animated Slide-In Sidebar Drawer
-          AnimatedBuilder(
-            animation: _slideAnimation,
-            builder: (context, child) {
-              final offset = (_slideAnimation.value - 1.0) * 320;
-              return Positioned(
-                top: 0,
-                bottom: 0,
-                left: offset,
-                child: GestureDetector(
-                  onHorizontalDragUpdate: (details) {
-                    if (details.primaryDelta != null && details.primaryDelta! < -8) {
-                      _closeSidebar(); // Swipe left to close
-                    }
-                  },
-                  child: NamastySidebarDrawer(
-                    currentOption: _currentOption,
-                    onSelectOption: _onSelectOption,
-                    onClose: _closeSidebar,
-                  ),
-                ),
-              );
-            },
-          ),
+      backgroundColor: colors.background,
+      // IndexedStack preserves state & scroll position across all 5 tabs
+      body: IndexedStack(
+        index: _currentIndex,
+        children: const [
+          ChatListScreen(),
+          StatusScreen(),
+          GroupsScreen(),
+          CallsScreen(),
+          ProfileScreen(),
         ],
       ),
-      floatingActionButton: widget.fabBuilder?.call(_currentOption),
+      // Rounded-square FAB positioned floating above the bottom bar
+      floatingActionButton: _buildFab(colors),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      // Floating pill bottom navigation bar
+      bottomNavigationBar: NamastyBottomNavBar(
+        currentIndex: _currentIndex,
+        onTabSelected: _onTabSelected,
+        unreadChats: 2,
+        unreadGroups: 3,
+        missedCalls: 1,
+      ),
     );
+  }
+
+  Widget? _buildFab(NamastyColors colors) {
+    switch (_currentIndex) {
+      case 0: // Chats tab
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: FloatingActionButton(
+            heroTag: 'fab_chats',
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Start a new chat')),
+              );
+            },
+            tooltip: 'New Chat',
+            child: const Icon(Icons.edit_rounded),
+          ),
+        );
+      case 1: // Status tab
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: FloatingActionButton(
+            heroTag: 'fab_status',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CreateStatusScreen()),
+              );
+            },
+            tooltip: 'Add Status',
+            child: const Icon(Icons.camera_alt_rounded),
+          ),
+        );
+      case 2: // Groups tab
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: FloatingActionButton(
+            heroTag: 'fab_groups',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CreateGroupScreen()),
+              );
+            },
+            tooltip: 'New Group',
+            child: const Icon(Icons.group_add_rounded),
+          ),
+        );
+      case 3: // Calls tab
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: FloatingActionButton(
+            heroTag: 'fab_calls',
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Start a new call')),
+              );
+            },
+            tooltip: 'New Call',
+            child: const Icon(Icons.add_call),
+          ),
+        );
+      case 4: // Profile tab
+      default:
+        return null;
+    }
   }
 }

@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/theme/namasty_theme.dart';
 import '../../../../core/widgets/namasty_avatar.dart';
+import '../../../../core/widgets/namasty_logo.dart';
+import '../../../settings/presentation/screens/settings_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final VoidCallback onOpenSidebar;
-
-  const ProfileScreen({
-    super.key,
-    required this.onOpenSidebar,
-  });
+  const ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -129,21 +126,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.menu_rounded, color: colors.primaryDark, size: 26),
-          onPressed: widget.onOpenSidebar,
-        ),
-        title: Text('Profile', style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
+        titleSpacing: 16,
+        title: const NamastyLogo(size: 34, wordmarkSize: 20, isDarkBackground: true),
         actions: [
           IconButton(
-            icon: Icon(Icons.qr_code_rounded, color: colors.primaryDark),
+            icon: const Icon(Icons.qr_code_rounded, color: Colors.white),
             onPressed: _showQrCode,
             tooltip: 'My QR Code',
           ),
+          const SizedBox(width: 6),
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.fromLTRB(20, 20, 20, 96), // Extra bottom padding for floating bottom bar
         children: [
           // Profile Avatar with camera change button
           Center(
@@ -163,7 +158,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: colors.primaryDark,
+                      color: colors.primary,
                       shape: BoxShape.circle,
                       border: Border.all(color: Colors.white, width: 2),
                     ),
@@ -204,7 +199,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
           const SizedBox(height: 24),
           Text(
-            'PRIVACY & SECURITY',
+            'ACCOUNT & PREFERENCES',
             style: GoogleFonts.poppins(
               fontSize: 12,
               fontWeight: FontWeight.w600,
@@ -214,25 +209,87 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           const SizedBox(height: 10),
 
+          // Cards moved from Sidebar Drawer (Requirement 7)
           _buildActionCard(colors, [
-            _buildSettingRow(colors, 'Privacy Settings', Icons.lock_outline_rounded),
-            _buildSettingRow(colors, 'Linked Devices', Icons.devices_rounded),
-            _buildSettingRow(colors, 'Starred Messages', Icons.star_border_rounded),
-            _buildSettingRow(colors, 'Blocked Contacts', Icons.block_flipped),
+            _buildSettingRow(
+              colors,
+              title: 'Settings & Security',
+              subtitle: 'Privacy, App lock, Cloud backup, Notifications',
+              icon: Icons.settings_outlined,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SettingsScreen()),
+                );
+              },
+            ),
+            Divider(color: colors.divider, height: 1),
+            _buildSettingRow(
+              colors,
+              title: 'Invite Friends',
+              subtitle: 'Share Namasty with friends and family',
+              icon: Icons.person_add_alt_1_outlined,
+              onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Invite Friends: Share Namasty with contacts!')),
+                );
+              },
+            ),
+            Divider(color: colors.divider, height: 1),
+            _buildSettingRow(
+              colors,
+              title: 'Help & FAQ',
+              subtitle: 'Get support, terms and privacy policy',
+              icon: Icons.help_outline_rounded,
+              onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Help & Support: support@namasty.app')),
+                );
+              },
+            ),
+            Divider(color: colors.divider, height: 1),
+            _buildSettingRow(
+              colors,
+              title: 'Logout',
+              subtitle: 'Sign out of this device',
+              icon: Icons.logout_rounded,
+              iconColor: Colors.redAccent,
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    title: const Text('Log out of Namasty?'),
+                    content: const Text('You will need to verify your phone number to sign back in.'),
+                    actions: [
+                      TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Logged out successfully')),
+                          );
+                        },
+                        child: const Text('Logout', style: TextStyle(color: Colors.white)),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ]),
 
           const SizedBox(height: 24),
-          // Delete Account Button
-          TextButton.icon(
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Account deletion verification')),
-              );
-            },
-            icon: const Icon(Icons.delete_outline_rounded, color: Colors.redAccent),
-            label: Text(
-              'Delete My Account',
-              style: GoogleFonts.poppins(color: Colors.redAccent, fontWeight: FontWeight.w600),
+          // Version info
+          Center(
+            child: Text(
+              'Namasty - Messenger v1.0.0\nBaat karo, dil se. 🕊️',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.poppins(
+                fontSize: 12,
+                color: colors.textSecondary.withOpacity(0.7),
+              ),
             ),
           ),
         ],
@@ -300,14 +357,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildSettingRow(NamastyColors colors, String title, IconData icon) {
+  Widget _buildSettingRow(
+    NamastyColors colors, {
+    required String title,
+    required String subtitle,
+    required IconData icon,
+    required VoidCallback onTap,
+    Color? iconColor,
+  }) {
     return ListTile(
-      leading: Icon(icon, color: colors.primaryDark, size: 22),
-      title: Text(title, style: GoogleFonts.poppins(fontSize: 14.5, fontWeight: FontWeight.w500)),
-      trailing: Icon(Icons.arrow_forward_ios_rounded, size: 16, color: colors.textSecondary.withOpacity(0.6)),
-      onTap: () {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(title)));
-      },
+      leading: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: colors.primaryLight,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Icon(icon, color: iconColor ?? colors.primaryDark, size: 22),
+      ),
+      title: Text(title, style: GoogleFonts.poppins(fontSize: 14.5, fontWeight: FontWeight.w600)),
+      subtitle: Text(subtitle, style: TextStyle(fontSize: 12, color: colors.textSecondary)),
+      trailing: Icon(Icons.arrow_forward_ios_rounded, size: 14, color: colors.textSecondary.withOpacity(0.6)),
+      onTap: onTap,
     );
   }
 }

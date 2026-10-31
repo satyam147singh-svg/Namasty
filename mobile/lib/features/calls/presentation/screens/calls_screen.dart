@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/theme/namasty_theme.dart';
 import '../../../../core/widgets/namasty_avatar.dart';
+import '../../../../core/widgets/namasty_logo.dart';
 import 'active_call_screen.dart';
 import 'incoming_call_screen.dart';
 
 class CallsScreen extends StatefulWidget {
-  final VoidCallback onOpenSidebar;
-
-  const CallsScreen({super.key, required this.onOpenSidebar});
+  const CallsScreen({super.key});
 
   @override
   State<CallsScreen> createState() => _CallsScreenState();
@@ -135,25 +134,22 @@ class _CallsScreenState extends State<CallsScreen> {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.menu_rounded, color: colors.primaryDark, size: 26),
-          onPressed: widget.onOpenSidebar,
-        ),
-        title: Text('Calls & WebRTC', style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
+        titleSpacing: 16,
+        title: const NamastyLogo(size: 34, wordmarkSize: 20, isDarkBackground: true),
         actions: [
           IconButton(
-            icon: Icon(Icons.ring_volume_rounded, color: colors.primaryDark),
+            icon: const Icon(Icons.ring_volume_rounded, color: Colors.white),
             onPressed: _simulateIncomingCall,
             tooltip: 'Simulate Incoming Call',
           ),
           IconButton(
-            icon: Icon(Icons.more_vert_rounded, color: colors.primaryDark),
+            icon: const Icon(Icons.more_vert_rounded, color: Colors.white),
             onPressed: () {},
           ),
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        padding: const EdgeInsets.fromLTRB(14, 12, 14, 96),
         children: [
           // Group Call Invitation Card
           Container(

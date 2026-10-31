@@ -225,151 +225,87 @@
       background: var(--bg-light);
     }
 
-    /* Sidebar Drawer */
-    .sidebar-overlay {
+    /* Floating Pill Bottom Navigation Bar */
+    .bottom-nav-wrapper {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(14, 26, 36, 0.45);
-      backdrop-filter: blur(4px);
-      z-index: 100;
-      opacity: 0;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      z-index: 25;
       pointer-events: none;
-      transition: opacity 0.3s ease;
     }
-    .sidebar-overlay.open {
-      opacity: 1;
+
+    .floating-bottom-bar {
       pointer-events: auto;
-    }
-
-    .sidebar-drawer {
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      width: 290px;
       background: var(--surface-light);
-      z-index: 101;
-      transform: translateX(-100%);
-      transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
-      display: flex;
-      flex-direction: column;
-      box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
-    }
-    .sidebar-drawer.open {
-      transform: translateX(0);
-    }
-
-    .drawer-header {
-      background: linear-gradient(135deg, #2F8FD8, #5AAEE8);
-      padding: 34px 20px 20px 20px;
-      color: white;
-      position: relative;
-    }
-
-    .drawer-avatar-wrap {
+      border-radius: 24px;
+      height: 62px;
+      padding: 6px 8px;
       display: flex;
       align-items: center;
-      gap: 14px;
-      margin-bottom: 12px;
+      justify-content: space-around;
+      box-shadow: 0 10px 28px rgba(18, 50, 74, 0.16);
+      border: 1px solid var(--border-color);
     }
 
-    .drawer-avatar {
-      width: 54px;
-      height: 54px;
-      border-radius: 16px;
-      background: white;
-      color: var(--primary-dark);
+    .nav-tab-item {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
-      font-weight: 700;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .drawer-user-info h3 {
-      font-size: 17px;
-      font-weight: 600;
-    }
-    .drawer-user-info p {
-      font-size: 12px;
-      opacity: 0.9;
-    }
-
-    .drawer-tagline {
-      font-size: 11px;
-      background: rgba(255, 255, 255, 0.2);
-      padding: 4px 10px;
-      border-radius: 20px;
-      display: inline-block;
-      margin-top: 6px;
-      font-weight: 500;
-    }
-
-    .drawer-items {
-      padding: 16px 12px;
-      display: flex;
-      flex-direction: column;
       gap: 6px;
-      flex: 1;
-      overflow-y: auto;
+      padding: 8px 12px;
+      border-radius: 18px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      border: none;
+      background: transparent;
+      color: #6B8BA4;
+      font-family: inherit;
     }
 
-    .drawer-item {
+    .nav-tab-item.active {
+      background: var(--active-pill);
+      color: var(--primary-dark);
+      padding: 8px 16px;
+      box-shadow: 0 2px 8px rgba(47, 143, 216, 0.18);
+    }
+
+    .nav-tab-icon {
+      font-size: 19px;
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 12px 16px;
-      border-radius: 14px;
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-main);
-      cursor: pointer;
-      transition: all 0.2s ease;
+      justify-content: center;
       position: relative;
     }
 
-    .drawer-item:hover {
-      background: var(--primary-light);
+    .nav-tab-label {
+      font-size: 12px;
+      font-weight: 700;
       color: var(--primary-dark);
+      display: none;
+      white-space: nowrap;
     }
 
-    .drawer-item.active {
-      background: var(--active-pill);
-      color: var(--primary-dark);
-      font-weight: 600;
+    .nav-tab-item.active .nav-tab-label {
+      display: inline-block;
     }
 
-    .drawer-item .badge {
-      margin-left: auto;
-      background: var(--primary-dark);
+    .nav-tab-badge {
+      position: absolute;
+      top: -4px;
+      right: -8px;
+      background: #E53935;
       color: white;
-      font-size: 11px;
-      padding: 2px 8px;
-      border-radius: 12px;
-      font-weight: 600;
-    }
-
-    .drawer-footer {
-      padding: 14px 16px;
-      border-top: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    .drawer-settings-btn {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--text-main);
-      cursor: pointer;
-      font-weight: 500;
+      font-size: 10px;
+      font-weight: 700;
+      min-width: 16px;
+      height: 16px;
+      line-height: 16px;
+      border-radius: 8px;
+      text-align: center;
+      padding: 0 4px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.25);
     }
 
     /* Screen Views Area */
@@ -467,6 +403,7 @@
       flex-direction: column;
       overflow-y: auto;
       position: relative;
+      padding-bottom: 84px;
     }
     .tab-content.active {
       display: flex;
@@ -608,7 +545,7 @@
     /* Floating Action Button */
     .fab-btn {
       position: absolute;
-      bottom: 20px;
+      bottom: 88px;
       right: 20px;
       width: 54px;
       height: 54px;
@@ -981,6 +918,37 @@
       align-items: center;
       gap: 14px;
     }
+    .profile-action-list {
+      width: 100%;
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .profile-action-card {
+      background: var(--surface-light);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .profile-action-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+    .action-card-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
 
     /* Full-Screen Story Viewer Overlay */
     .story-viewer-modal {
@@ -1116,70 +1084,20 @@
       <!-- App Viewport -->
       <div class="app-viewport">
 
-        <!-- Sidebar Overlay & Animated Drawer -->
-        <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
-        <aside class="sidebar-drawer" id="sidebarDrawer">
-          <div class="drawer-header">
-            <div class="drawer-avatar-wrap">
-              <div class="drawer-avatar">AS</div>
-              <div class="drawer-user-info">
-                <h3>Aarav Sharma</h3>
-                <p>+91 98765 43210</p>
-              </div>
-            </div>
-            <span class="drawer-tagline">🕊️ Baat karo, dil se.</span>
-          </div>
-
-          <div class="drawer-items">
-            <div class="drawer-item active" onclick="switchTab('chats')">
-              <span>💬</span>
-              <span>Chats</span>
-              <span class="badge">3</span>
-            </div>
-            <div class="drawer-item" onclick="switchTab('status')">
-              <span>⭕</span>
-              <span>Status</span>
-              <span class="badge" style="background:#5DADE2;">NEW</span>
-            </div>
-            <div class="drawer-item" onclick="switchTab('groups')">
-              <span>👥</span>
-              <span>Groups</span>
-            </div>
-            <div class="drawer-item" onclick="switchTab('calls')">
-              <span>📞</span>
-              <span>Calls</span>
-            </div>
-            <div class="drawer-item" onclick="switchTab('profile')">
-              <span>👤</span>
-              <span>Profile</span>
-            </div>
-          </div>
-
-          <div class="drawer-footer">
-            <div class="drawer-settings-btn" onclick="openSettingsModal()">
-              <span>⚙️</span>
-              <span>Settings & Security</span>
-            </div>
-            <span>v1.0.0</span>
-          </div>
-        </aside>
-
         <!-- Main Screen Container -->
         <div class="screen-container">
 
-          <!-- Top App Bar with Hamburger -->
+          <!-- Top App Bar with Namasty Logo -->
           <div class="app-top-bar">
             <div class="top-bar-left">
-              <button class="hamburger-btn" onclick="openSidebar()" aria-label="Open Navigation">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-                  <line x1="3" y1="12" x2="21" y2="12"></line>
-                  <line x1="3" y1="6" x2="21" y2="6"></line>
-                  <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-              </button>
-              <div class="app-title-wrap">
-                <h2 id="screenTitle">Namasty</h2>
-                <span id="screenSubtitle">Baat karo, dil se.</span>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <div style="width:34px; height:34px; border-radius:11px; background:linear-gradient(135deg, #2F8FD8, #1B6BB0); display:flex; align-items:center; justify-content:center; color:white; font-size:18px; box-shadow:0 3px 8px rgba(47,143,216,0.35);">
+                  🙏
+                </div>
+                <div class="app-title-wrap">
+                  <h2 id="screenTitle" style="font-size:18px; font-weight:700;">Namasty</h2>
+                  <span id="screenSubtitle" style="font-size:11px; color:var(--primary-dark); font-weight:500;">Baat karo, dil se.</span>
+                </div>
               </div>
             </div>
 
@@ -1187,7 +1105,7 @@
               <button class="action-icon-btn" onclick="alert('Search activated')" title="Search">
                 🔍
               </button>
-              <button class="action-icon-btn" onclick="openSidebar()" title="Menu">
+              <button class="action-icon-btn" onclick="alert('Options menu')" title="Menu">
                 ⋮
               </button>
             </div>
@@ -1392,6 +1310,45 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Moved sidebar actions to Profile cards -->
+              <div class="profile-action-list">
+                <div class="profile-action-card" onclick="openSettingsModal()">
+                  <div class="action-card-icon" style="background:var(--primary-light); color:var(--primary-dark);">⚙️</div>
+                  <div style="flex:1;">
+                    <div style="font-size:14px; font-weight:600; color:var(--text-main);">Settings & Privacy</div>
+                    <div style="font-size:11px; color:var(--text-muted);">Account, notifications, E2EE keys</div>
+                  </div>
+                  <span style="color:var(--text-muted); font-size:14px;">›</span>
+                </div>
+
+                <div class="profile-action-card" onclick="alert('Invite link copied: https://namasty.app/invite/aarav')">
+                  <div class="action-card-icon" style="background:#EBF5FB; color:var(--primary);">🎁</div>
+                  <div style="flex:1;">
+                    <div style="font-size:14px; font-weight:600; color:var(--text-main);">Invite Friends</div>
+                    <div style="font-size:11px; color:var(--text-muted);">Share Namasty with family & contacts</div>
+                  </div>
+                  <span style="color:var(--text-muted); font-size:14px;">›</span>
+                </div>
+
+                <div class="profile-action-card" onclick="alert('Help & FAQ:\n\n1. How is Namasty secure?\n- Signal Protocol E2EE with Double Ratchet.\n2. How long do stories last?\n- 24 hours with auto TTL.')">
+                  <div class="action-card-icon" style="background:var(--primary-light); color:var(--primary-dark);">❓</div>
+                  <div style="flex:1;">
+                    <div style="font-size:14px; font-weight:600; color:var(--text-main);">Help & FAQ</div>
+                    <div style="font-size:11px; color:var(--text-muted);">Support, safety tips, licenses</div>
+                  </div>
+                  <span style="color:var(--text-muted); font-size:14px;">›</span>
+                </div>
+
+                <div class="profile-action-card" onclick="alert('Logout requested: You have been logged out securely.')" style="border-color:#FADBD8;">
+                  <div class="action-card-icon" style="background:#FDEDEC; color:var(--danger);">🚪</div>
+                  <div style="flex:1;">
+                    <div style="font-size:14px; font-weight:600; color:var(--danger);">Log Out</div>
+                    <div style="font-size:11px; color:var(--text-muted);">Securely unlink this session</div>
+                  </div>
+                  <span style="color:var(--danger); font-size:14px;">›</span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -1478,6 +1435,32 @@
             </div>
           </div>
 
+          <!-- Floating Pill Bottom Navigation Bar -->
+          <div class="bottom-nav-wrapper">
+            <nav class="floating-bottom-bar">
+              <button class="nav-tab-item active" id="bottomTab-chats" onclick="switchTab('chats')">
+                <span class="nav-tab-icon">💬<span class="nav-tab-badge">2</span></span>
+                <span class="nav-tab-label">Chats</span>
+              </button>
+              <button class="nav-tab-item" id="bottomTab-status" onclick="switchTab('status')">
+                <span class="nav-tab-icon">⭕</span>
+                <span class="nav-tab-label">Status</span>
+              </button>
+              <button class="nav-tab-item" id="bottomTab-groups" onclick="switchTab('groups')">
+                <span class="nav-tab-icon">👥<span class="nav-tab-badge">3</span></span>
+                <span class="nav-tab-label">Groups</span>
+              </button>
+              <button class="nav-tab-item" id="bottomTab-calls" onclick="switchTab('calls')">
+                <span class="nav-tab-icon">📞<span class="nav-tab-badge">1</span></span>
+                <span class="nav-tab-label">Calls</span>
+              </button>
+              <button class="nav-tab-item" id="bottomTab-profile" onclick="switchTab('profile')">
+                <span class="nav-tab-icon">👤</span>
+                <span class="nav-tab-label">Profile</span>
+              </button>
+            </nav>
+          </div>
+
         </div>
       </div>
     </div>
@@ -1555,15 +1538,15 @@
   </main>
 
   <script>
-    // Tab switching
+    // Tab switching for 5 bottom tabs
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
       const activeTab = document.getElementById('tab-' + tabId);
       if (activeTab) activeTab.classList.add('active');
 
-      document.querySelectorAll('.drawer-item').forEach(el => el.classList.remove('active'));
-      const activeDrawerItem = Array.from(document.querySelectorAll('.drawer-item')).find(el => el.innerText.toLowerCase().includes(tabId));
-      if (activeDrawerItem) activeDrawerItem.classList.add('active');
+      document.querySelectorAll('.nav-tab-item').forEach(el => el.classList.remove('active'));
+      const activeBottomTab = document.getElementById('bottomTab-' + tabId);
+      if (activeBottomTab) activeBottomTab.classList.add('active');
 
       const titles = {
         chats: 'Chats',
@@ -1573,18 +1556,11 @@
         profile: 'My Profile'
       };
       document.getElementById('screenTitle').innerText = titles[tabId] || 'Namasty';
-      closeSidebar();
     }
 
-    // Sidebar drawer controls
-    function openSidebar() {
-      document.getElementById('sidebarDrawer').classList.add('open');
-      document.getElementById('sidebarOverlay').classList.add('open');
-    }
-    function closeSidebar() {
-      document.getElementById('sidebarDrawer').classList.remove('open');
-      document.getElementById('sidebarOverlay').classList.remove('open');
-    }
+    // Harmless stubs for backwards compatibility
+    function openSidebar() {}
+    function closeSidebar() {}
 
     // Active conversation controls
     function openConversation(name, status, initials) {

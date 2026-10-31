@@ -31,59 +31,12 @@ class NamastyApp extends StatelessWidget {
   }
 }
 
-/// The main Shell wrapper connecting the animated Sidebar to all 5 screens
+/// The main Shell wrapper hosting the 5 bottom navigation tabs
 class NamastyMainShellScreen extends StatelessWidget {
   const NamastyMainShellScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return NamastyShell(
-      screenBuilder: (currentOption, openSidebar) {
-        switch (currentOption) {
-          case SidebarOption.chats:
-            return ChatListScreen(onOpenSidebar: openSidebar);
-          case SidebarOption.status:
-            return StatusScreen(onOpenSidebar: openSidebar);
-          case SidebarOption.groups:
-            return GroupsScreen(onOpenSidebar: openSidebar);
-          case SidebarOption.calls:
-            return CallsScreen(onOpenSidebar: openSidebar);
-          case SidebarOption.profile:
-            return ProfileScreen(onOpenSidebar: openSidebar);
-        }
-      },
-      fabBuilder: (currentOption) {
-        switch (currentOption) {
-          case SidebarOption.chats:
-            return FloatingActionButton(
-              onPressed: () {
-                // New chat dialog or action
-              },
-              tooltip: 'New Chat',
-              child: const Icon(Icons.chat_bubble_rounded),
-            );
-          case SidebarOption.status:
-            return FloatingActionButton(
-              onPressed: () {},
-              tooltip: 'Add Status',
-              child: const Icon(Icons.camera_alt_rounded),
-            );
-          case SidebarOption.groups:
-            return FloatingActionButton(
-              onPressed: () {},
-              tooltip: 'New Group',
-              child: const Icon(Icons.group_add_rounded),
-            );
-          case SidebarOption.calls:
-            return FloatingActionButton(
-              onPressed: () {},
-              tooltip: 'New Call',
-              child: const Icon(Icons.add_call),
-            );
-          case SidebarOption.profile:
-            return null;
-        }
-      },
-    );
+    return const NamastyShell();
   }
 }

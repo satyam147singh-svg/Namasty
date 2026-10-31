@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/theme/namasty_theme.dart';
 import '../../../../core/widgets/namasty_avatar.dart';
+import '../../../../core/widgets/namasty_logo.dart';
 import '../../chat/domain/models/chat_models.dart';
 import '../../chat/presentation/screens/chat_conversation_screen.dart';
 import 'create_group_screen.dart';
 import 'group_info_screen.dart';
 
 class GroupsScreen extends StatefulWidget {
-  final VoidCallback onOpenSidebar;
-
-  const GroupsScreen({super.key, required this.onOpenSidebar});
+  const GroupsScreen({super.key});
 
   @override
   State<GroupsScreen> createState() => _GroupsScreenState();
@@ -94,25 +93,23 @@ class _GroupsScreenState extends State<GroupsScreen> {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.menu_rounded, color: colors.primaryDark, size: 26),
-          onPressed: widget.onOpenSidebar,
-        ),
-        title: Text('Groups & Communities', style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
+        titleSpacing: 16,
+        title: const NamastyLogo(size: 34, wordmarkSize: 20, isDarkBackground: true),
         actions: [
           IconButton(
-            icon: Icon(Icons.group_add_rounded, color: colors.primaryDark),
+            icon: const Icon(Icons.group_add_rounded, color: Colors.white),
             onPressed: _openCreateGroup,
             tooltip: 'New Group',
           ),
           IconButton(
-            icon: Icon(Icons.more_vert_rounded, color: colors.primaryDark),
+            icon: const Icon(Icons.more_vert_rounded, color: Colors.white),
             onPressed: () {},
           ),
+          const SizedBox(width: 4),
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        padding: const EdgeInsets.fromLTRB(14, 12, 14, 96),
         children: [
           // Create Group Card Button
           Material(
