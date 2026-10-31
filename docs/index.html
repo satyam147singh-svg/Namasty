@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Namasty - Messenger | Live Interactive Demo & Layout</title>
+  <meta name="description" content="Namasty - Messenger: Real-time messaging app with 100% original Sky Blue theme, Sidebar navigation, E2EE, 24h stories, and WebRTC calls.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #87CEEB;
+      --primary-dark: #4BA3D3;
+      --primary-light: #E8F6FD;
+      --accent: #5DADE2;
+      --surface-light: #FFFFFF;
+      --bg-light: #F4FAFE;
+      --text-main: #12324A;
+      --text-muted: #6B8BA4;
+      --border-color: #E1F0F8;
+      --active-pill: #D6EFFB;
+      --bubble-sent-start: #87CEEB;
+      --bubble-sent-end: #B3E5FC;
+      --bubble-received: #FFFFFF;
+      --danger: #FF5A5F;
+      --success: #34C759;
+      --shadow-sm: 0 2px 8px rgba(75, 163, 211, 0.08);
+      --shadow-md: 0 8px 24px rgba(75, 163, 211, 0.15);
+      --shadow-lg: 0 16px 40px rgba(18, 50, 74, 0.18);
+    }
+
+    [data-theme="dark"] {
+      --surface-light: #162633;
+      --bg-light: #0E1A24;
+      --text-main: #EAF4FA;
+      --text-muted: #8AA4B8;
+      --border-color: #1F3344;
+      --active-pill: #1C3549;
+      --bubble-sent-start: #357A9E;
+      --bubble-sent-end: #4BA3D3;
+      --bubble-received: #1E3345;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #0B1620;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Top Demo Header Bar */
+    .top-demo-nav {
+      background: rgba(14, 26, 36, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #1F3344;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      color: #EAF4FA;
+    }
+
+    .demo-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .demo-logo-badge {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #87CEEB, #4BA3D3);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(75, 163, 211, 0.4);
+    }
+
+    .demo-title h1 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .demo-title p {
+      font-size: 11px;
+      color: #87CEEB;
+      font-weight: 500;
+    }
+
+    .demo-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .view-switcher {
+      display: flex;
+      background: #182C3D;
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid #233D52;
+    }
+
+    .view-btn {
+      background: transparent;
+      border: none;
+      color: #8AA4B8;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-family: inherit;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .view-btn.active {
+      background: var(--primary-dark);
+      color: #FFFFFF;
+      box-shadow: 0 2px 8px rgba(75, 163, 211, 0.4);
+    }
+
+    .control-icon-btn {
+      background: #182C3D;
+      border: 1px solid #233D52;
+      color: #EAF4FA;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .control-icon-btn:hover {
+      background: #233D52;
+      color: #87CEEB;
+    }
+
+    /* Main Container */
+    .workspace-stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 20px;
+      background: radial-gradient(circle at 50% 20%, #162C3F 0%, #0B1620 100%);
+      position: relative;
+    }
+
+    /* Mobile Device Frame */
+    .device-container {
+      width: 100%;
+      max-width: 420px;
+      height: 840px;
+      background: var(--bg-light);
+      border-radius: 46px;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 0 12px #202E3B, 0 0 0 14px #304455;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transition: max-width 0.3s ease, border-radius 0.3s ease;
+    }
+
+    .device-container.fullscreen-mode {
+      max-width: 1000px;
+      height: 90vh;
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Device Top Notch / Dynamic Island */
+    .device-notch-bar {
+      height: 36px;
+      background: var(--bg-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-main);
+      z-index: 50;
+      flex-shrink: 0;
+    }
+
+    .dynamic-island {
+      width: 100px;
+      height: 18px;
+      background: #000000;
+      border-radius: 20px;
+    }
+
+    /* Mobile App Shell */
+    .app-viewport {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      background: var(--bg-light);
+    }
+
+    /* Sidebar Drawer */
+    .sidebar-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(14, 26, 36, 0.45);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .sidebar-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sidebar-drawer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 290px;
+      background: var(--surface-light);
+      z-index: 101;
+      transform: translateX(-100%);
+      transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+    }
+    .sidebar-drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      background: linear-gradient(135deg, #87CEEB, #4BA3D3);
+      padding: 34px 20px 20px 20px;
+      color: white;
+      position: relative;
+    }
+
+    .drawer-avatar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .drawer-avatar {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      background: white;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .drawer-user-info h3 {
+      font-size: 17px;
+      font-weight: 600;
+    }
+    .drawer-user-info p {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .drawer-tagline {
+      font-size: 11px;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 4px 10px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    .drawer-items {
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .drawer-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .drawer-item:hover {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+    }
+
+    .drawer-item.active {
+      background: var(--active-pill);
+      color: var(--primary-dark);
+      font-weight: 600;
+    }
+
+    .drawer-item .badge {
+      margin-left: auto;
+      background: var(--primary-dark);
+      color: white;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .drawer-footer {
+      padding: 14px 16px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .drawer-settings-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-main);
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    /* Screen Views Area */
+    .screen-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      background: var(--bg-light);
+    }
+
+    /* App Top Bar */
+    .app-top-bar {
+      height: 60px;
+      background: var(--surface-light);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      flex-shrink: 0;
+      z-index: 10;
+    }
+
+    .top-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hamburger-btn {
+      width: 40px;
+      height: 40px;
+      background: var(--primary-light);
+      border: none;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--primary-dark);
+      transition: transform 0.15s ease;
+    }
+    .hamburger-btn:active {
+      transform: scale(0.92);
+    }
+
+    .app-title-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+    .app-title-wrap h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .app-title-wrap span {
+      font-size: 11px;
+      color: var(--primary-dark);
+      font-weight: 500;
+    }
+
+    .top-bar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .action-icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .action-icon-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+    }
+
+    /* Screen Panes */
+    .tab-content {
+      flex: 1;
+      display: none;
+      flex-direction: column;
+      overflow-y: auto;
+      position: relative;
+    }
+    .tab-content.active {
+      display: flex;
+    }
+
+    /* Screen 1: Chats Screen */
+    .chats-search-bar {
+      padding: 12px 16px;
+      background: var(--surface-light);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .search-box {
+      background: var(--bg-light);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .search-box input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text-main);
+      width: 100%;
+    }
+
+    .chat-list {
+      display: flex;
+      flex-direction: column;
+      padding: 8px 12px;
+      gap: 6px;
+    }
+
+    .chat-card {
+      background: var(--surface-light);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .chat-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .chat-avatar-wrap {
+      position: relative;
+    }
+    .chat-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(135deg, #A8DDF5, #4BA3D3);
+    }
+    .status-ring {
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      right: -3px;
+      bottom: -3px;
+      border: 2px solid var(--primary);
+      border-radius: 19px;
+    }
+    .online-dot {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 13px;
+      height: 13px;
+      background: var(--success);
+      border: 2px solid var(--surface-light);
+      border-radius: 50%;
+    }
+
+    .chat-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .chat-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .chat-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .chat-time {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .chat-preview-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chat-last-msg {
+      font-size: 13px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 220px;
+    }
+    .chat-badge {
+      background: var(--primary-dark);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      min-width: 20px;
+      height: 20px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 6px;
+    }
+
+    /* Floating Action Button */
+    .fab-btn {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      width: 54px;
+      height: 54px;
+      background: linear-gradient(135deg, #87CEEB, #4BA3D3);
+      border-radius: 18px;
+      color: white;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 8px 20px rgba(75, 163, 211, 0.4);
+      cursor: pointer;
+      z-index: 20;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .fab-btn:hover {
+      transform: scale(1.08);
+    }
+
+    /* Screen 1b: Active Chat Conversation View */
+    .chat-conversation-view {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg-light);
+      z-index: 30;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .chat-conversation-view.open {
+      transform: translateX(0);
+    }
+
+    .convo-top-bar {
+      height: 60px;
+      background: var(--surface-light);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .back-btn {
+      width: 36px;
+      height: 36px;
+      background: transparent;
+      border: none;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-main);
+    }
+
+    .convo-user-meta {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .convo-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #A8DDF5, #4BA3D3);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+    .convo-name h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .convo-name p {
+      font-size: 11px;
+      color: var(--primary-dark);
+      font-weight: 500;
+    }
+
+    .convo-messages-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .e2ee-pill {
+      align-self: center;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    /* Message Bubbles */
+    .msg-bubble {
+      max-width: 78%;
+      padding: 10px 14px;
+      border-radius: 18px;
+      font-size: 14px;
+      position: relative;
+      line-height: 1.45;
+      animation: fadeInMsg 0.25s ease;
+    }
+    @keyframes fadeInMsg {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .msg-received {
+      align-self: flex-start;
+      background: var(--bubble-received);
+      color: var(--text-main);
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      border: 1px solid var(--border-color);
+    }
+
+    .msg-sent {
+      align-self: flex-end;
+      background: linear-gradient(135deg, var(--bubble-sent-start), var(--bubble-sent-end));
+      color: #0E293F;
+      border-bottom-right-radius: 4px;
+      box-shadow: 0 4px 12px rgba(75, 163, 211, 0.2);
+    }
+
+    .msg-meta {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+      font-size: 10px;
+      margin-top: 4px;
+      opacity: 0.8;
+    }
+
+    /* Voice Note Bubble */
+    .voice-bubble {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 210px;
+    }
+    .voice-play-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #0E293F;
+      color: white;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .waveform-bars {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      flex: 1;
+      height: 24px;
+    }
+    .wave-bar {
+      width: 3px;
+      background: #0E293F;
+      border-radius: 3px;
+      transition: height 0.15s ease;
+    }
+    .speed-tag {
+      background: rgba(14, 41, 63, 0.15);
+      border-radius: 8px;
+      padding: 2px 6px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Message Input Bar */
+    .chat-input-bar {
+      padding: 10px 14px;
+      background: var(--surface-light);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .chat-input-field {
+      flex: 1;
+      background: var(--bg-light);
+      border: 1px solid var(--border-color);
+      border-radius: 22px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .chat-input-field input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text-main);
+      width: 100%;
+    }
+    .send-msg-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #87CEEB, #4BA3D3);
+      border: none;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(75, 163, 211, 0.35);
+      font-size: 16px;
+    }
+
+    /* Screen 2: Status Stories View */
+    .status-section {
+      padding: 16px;
+    }
+    .my-status-card {
+      background: var(--surface-light);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    .my-status-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      position: relative;
+    }
+    .plus-badge {
+      position: absolute;
+      bottom: -4px;
+      right: -4px;
+      background: var(--primary-dark);
+      color: white;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      border: 2px solid var(--surface-light);
+    }
+    .section-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Screen 3: Groups Screen */
+    .groups-container {
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Screen 4: Calls Screen */
+    .calls-container {
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .call-log-card {
+      background: var(--surface-light);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .call-icon-action {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    /* Screen 5: Profile Screen */
+    .profile-container {
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .profile-hero-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, #87CEEB, #4BA3D3);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      font-weight: 700;
+      box-shadow: 0 8px 24px rgba(75, 163, 211, 0.35);
+      margin-bottom: 16px;
+    }
+    .profile-info-card {
+      width: 100%;
+      background: var(--surface-light);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 16px;
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .profile-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    /* Full-Screen Story Viewer Overlay */
+    .story-viewer-modal {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #0E1A24;
+      z-index: 150;
+      display: none;
+      flex-direction: column;
+      padding: 16px;
+      color: white;
+    }
+    .story-viewer-modal.open {
+      display: flex;
+    }
+    .story-progress-bar {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 14px;
+    }
+    .progress-segment {
+      flex: 1;
+      height: 3px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: #87CEEB;
+      transition: width 0.1s linear;
+    }
+    .story-user-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .story-body-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 600;
+      padding: 24px;
+      background: linear-gradient(135deg, #1A364E, #0E1A24);
+      border-radius: 24px;
+      margin: 14px 0;
+      border: 1px solid #233D52;
+    }
+
+    /* Web Admin Portal Panel */
+    .admin-portal-view {
+      display: none;
+      width: 100%;
+      max-width: 1100px;
+      background: var(--surface-light);
+      border-radius: 24px;
+      border: 1px solid #1F3344;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .admin-portal-view.active {
+      display: flex;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .top-demo-nav { padding: 10px 16px; }
+      .workspace-stage { padding: 10px; }
+      .device-container { height: 92vh; border-radius: 32px; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Demo Nav Bar -->
+  <header class="top-demo-nav">
+    <div class="demo-brand">
+      <div class="demo-logo-badge">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          <path d="M12 7v6"></path>
+          <path d="M9 10h6"></path>
+        </svg>
+      </div>
+      <div class="demo-title">
+        <h1>Namasty 🕊️ <span style="font-size:12px; font-weight:normal; opacity:0.8;">Messenger</span></h1>
+        <p>"Namasty! Baat karo, dil se." • Sky Blue Theme</p>
+      </div>
+    </div>
+
+    <div class="demo-controls">
+      <div class="view-switcher">
+        <button class="view-btn active" id="btnViewMobile" onclick="switchMainView('mobile')">
+          📱 Mobile App
+        </button>
+        <button class="view-btn" id="btnViewAdmin" onclick="switchMainView('admin')">
+          ⚙️ Web Admin
+        </button>
+      </div>
+
+      <button class="control-icon-btn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+        🌓
+      </button>
+
+      <button class="control-icon-btn" onclick="toggleFullscreen()" title="Toggle Frame Size">
+        ⛶
+      </button>
+    </div>
+  </header>
+
+  <!-- Workspace Stage -->
+  <main class="workspace-stage">
+
+    <!-- Mobile App Simulator -->
+    <div class="device-container" id="deviceContainer">
+      <!-- Device Top Notch / Status -->
+      <div class="device-notch-bar">
+        <span>9:41</span>
+        <div class="dynamic-island"></div>
+        <div style="display:flex; gap:6px; align-items:center;">
+          <span>5G</span>
+          <span>100%</span>
+        </div>
+      </div>
+
+      <!-- App Viewport -->
+      <div class="app-viewport">
+
+        <!-- Sidebar Overlay & Animated Drawer -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+        <aside class="sidebar-drawer" id="sidebarDrawer">
+          <div class="drawer-header">
+            <div class="drawer-avatar-wrap">
+              <div class="drawer-avatar">AS</div>
+              <div class="drawer-user-info">
+                <h3>Aarav Sharma</h3>
+                <p>+91 98765 43210</p>
+              </div>
+            </div>
+            <span class="drawer-tagline">🕊️ Baat karo, dil se.</span>
+          </div>
+
+          <div class="drawer-items">
+            <div class="drawer-item active" onclick="switchTab('chats')">
+              <span>💬</span>
+              <span>Chats</span>
+              <span class="badge">3</span>
+            </div>
+            <div class="drawer-item" onclick="switchTab('status')">
+              <span>⭕</span>
+              <span>Status</span>
+              <span class="badge" style="background:#5DADE2;">NEW</span>
+            </div>
+            <div class="drawer-item" onclick="switchTab('groups')">
+              <span>👥</span>
+              <span>Groups</span>
+            </div>
+            <div class="drawer-item" onclick="switchTab('calls')">
+              <span>📞</span>
+              <span>Calls</span>
+            </div>
+            <div class="drawer-item" onclick="switchTab('profile')">
+              <span>👤</span>
+              <span>Profile</span>
+            </div>
+          </div>
+
+          <div class="drawer-footer">
+            <div class="drawer-settings-btn" onclick="openSettingsModal()">
+              <span>⚙️</span>
+              <span>Settings & Security</span>
+            </div>
+            <span>v1.0.0</span>
+          </div>
+        </aside>
+
+        <!-- Main Screen Container -->
+        <div class="screen-container">
+
+          <!-- Top App Bar with Hamburger -->
+          <div class="app-top-bar">
+            <div class="top-bar-left">
+              <button class="hamburger-btn" onclick="openSidebar()" aria-label="Open Navigation">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                  <line x1="3" y1="12" x2="21" y2="12"></line>
+                  <line x1="3" y1="6" x2="21" y2="6"></line>
+                  <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+              </button>
+              <div class="app-title-wrap">
+                <h2 id="screenTitle">Namasty</h2>
+                <span id="screenSubtitle">Baat karo, dil se.</span>
+              </div>
+            </div>
+
+            <div class="top-bar-actions">
+              <button class="action-icon-btn" onclick="alert('Search activated')" title="Search">
+                🔍
+              </button>
+              <button class="action-icon-btn" onclick="openSidebar()" title="Menu">
+                ⋮
+              </button>
+            </div>
+          </div>
+
+          <!-- TAB 1: CHATS -->
+          <div class="tab-content active" id="tab-chats">
+            <div class="chats-search-bar">
+              <div class="search-box">
+                <span>🔍</span>
+                <input type="text" placeholder="Search chats, contacts..." oninput="filterChats(this.value)">
+              </div>
+            </div>
+
+            <div class="chat-list" id="chatListContainer">
+              <!-- Chat 1: Priya Patel -->
+              <div class="chat-card" onclick="openConversation('Priya Patel', 'Online', 'PP')">
+                <div class="chat-avatar-wrap">
+                  <div class="chat-avatar">PP</div>
+                  <div class="online-dot"></div>
+                </div>
+                <div class="chat-info">
+                  <div class="chat-header-row">
+                    <span class="chat-name">Priya Patel</span>
+                    <span class="chat-time">10:42 AM</span>
+                  </div>
+                  <div class="chat-preview-row">
+                    <span class="chat-last-msg">Namasty Aarav! Let's connect on video call.</span>
+                    <span class="chat-badge">2</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Chat 2: Rohan Verma -->
+              <div class="chat-card" onclick="openConversation('Rohan Verma', 'Last seen today at 9:15 AM', 'RV')">
+                <div class="chat-avatar-wrap">
+                  <div class="chat-avatar" style="background:linear-gradient(135deg, #87CEEB, #5DADE2);">RV</div>
+                </div>
+                <div class="chat-info">
+                  <div class="chat-header-row">
+                    <span class="chat-name">Rohan Verma</span>
+                    <span class="chat-time">Yesterday</span>
+                  </div>
+                  <div class="chat-preview-row">
+                    <span class="chat-last-msg">🎙️ Voice message (0:42)</span>
+                    <span class="chat-badge">1</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Chat 3: Tech Innovators India -->
+              <div class="chat-card" onclick="openConversation('Tech Innovators 🇮🇳', '842 members', 'TI')">
+                <div class="chat-avatar-wrap">
+                  <div class="chat-avatar" style="background:linear-gradient(135deg, #5DADE2, #4BA3D3);">👥</div>
+                </div>
+                <div class="chat-info">
+                  <div class="chat-header-row">
+                    <span class="chat-name">Tech Innovators India 🇮🇳</span>
+                    <span class="chat-time">Oct 30</span>
+                  </div>
+                  <div class="chat-preview-row">
+                    <span class="chat-last-msg">Admin: Namasty version 1.0 released!</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Floating Action Button -->
+            <button class="fab-btn" onclick="openNewChatModal()" title="Start New Chat">
+              ✏️
+            </button>
+          </div>
+
+          <!-- TAB 2: STATUS STORIES -->
+          <div class="tab-content" id="tab-status">
+            <div class="status-section">
+              <div class="my-status-card" onclick="launchStatusViewer('Aarav Sharma', 'Today, 8:30 AM', 'Exploring the sky blue theme of Namasty! 🕊️')">
+                <div class="my-status-avatar">
+                  <span>AS</span>
+                  <div class="plus-badge">+</div>
+                </div>
+                <div>
+                  <h4 style="font-size:15px; font-weight:600;">My Status</h4>
+                  <p style="font-size:12px; color:var(--text-muted);">Tap to add status or view your 24h update</p>
+                </div>
+              </div>
+
+              <div class="section-label">Recent Updates (24h)</div>
+
+              <div class="chat-card" onclick="launchStatusViewer('Priya Patel', '45m ago', 'Coding in Mumbai with coffee and Namasty! ☕✨')">
+                <div class="chat-avatar-wrap">
+                  <div class="chat-avatar">PP</div>
+                  <div class="status-ring"></div>
+                </div>
+                <div class="chat-info">
+                  <h4 class="chat-name">Priya Patel</h4>
+                  <p class="chat-last-msg" style="color:var(--primary-dark);">45 minutes ago</p>
+                </div>
+              </div>
+
+              <div class="chat-card" onclick="launchStatusViewer('Rohan Verma', '2h ago', 'Namasty WebRTC video calls are buttery smooth! 📹')">
+                <div class="chat-avatar-wrap">
+                  <div class="chat-avatar" style="background:linear-gradient(135deg, #87CEEB, #4BA3D3);">RV</div>
+                  <div class="status-ring"></div>
+                </div>
+                <div class="chat-info">
+                  <h4 class="chat-name">Rohan Verma</h4>
+                  <p class="chat-last-msg" style="color:var(--primary-dark);">2 hours ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: GROUPS -->
+          <div class="tab-content" id="tab-groups">
+            <div class="groups-container">
+              <div class="chat-card" onclick="openConversation('Tech Innovators 🇮🇳', '842 members', 'TI')">
+                <div class="chat-avatar-wrap">
+                  <div class="chat-avatar">👥</div>
+                </div>
+                <div class="chat-info">
+                  <div class="chat-header-row">
+                    <span class="chat-name">Tech Innovators India 🇮🇳</span>
+                    <span style="font-size:11px; color:var(--primary-dark); font-weight:600;">842 / 1024</span>
+                  </div>
+                  <p class="chat-last-msg">Only Admins can send messages</p>
+                </div>
+              </div>
+
+              <div class="chat-card" onclick="openConversation('Bangalore Flutter Devs', '312 members', 'BF')">
+                <div class="chat-avatar-wrap">
+                  <div class="chat-avatar" style="background:linear-gradient(135deg, #87CEEB, #5DADE2);">💻</div>
+                </div>
+                <div class="chat-info">
+                  <div class="chat-header-row">
+                    <span class="chat-name">Bangalore Flutter Devs</span>
+                    <span style="font-size:11px; color:var(--primary-dark); font-weight:600;">312 members</span>
+                  </div>
+                  <p class="chat-last-msg">Aarav: Clean Architecture with BLoC is awesome!</p>
+                </div>
+              </div>
+            </div>
+            <button class="fab-btn" onclick="alert('Create group modal opened')" title="Create Group">
+              👥+
+            </button>
+          </div>
+
+          <!-- TAB 4: CALLS -->
+          <div class="tab-content" id="tab-calls">
+            <div class="calls-container">
+              <button style="background:var(--primary-light); color:var(--primary-dark); border:none; padding:12px; border-radius:14px; font-weight:600; cursor:pointer; margin-bottom:8px;" onclick="simulateIncomingCall()">
+                🔔 Simulate Incoming WebRTC Call
+              </button>
+
+              <div class="call-log-card">
+                <div class="chat-avatar">PP</div>
+                <div style="flex:1;">
+                  <h4 style="font-size:15px; font-weight:600;">Priya Patel</h4>
+                  <p style="font-size:12px; color:var(--primary-dark);">Incoming Video • Today, 10:30 AM</p>
+                </div>
+                <button class="call-icon-action" onclick="alert('Calling Priya...')">📹</button>
+              </div>
+
+              <div class="call-log-card">
+                <div class="chat-avatar" style="background:linear-gradient(135deg, #87CEEB, #5DADE2);">RV</div>
+                <div style="flex:1;">
+                  <h4 style="font-size:15px; font-weight:600;">Rohan Verma</h4>
+                  <p style="font-size:12px; color:var(--danger);">Missed Voice Call • Yesterday</p>
+                </div>
+                <button class="call-icon-action" onclick="alert('Calling Rohan...')">📞</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 5: PROFILE -->
+          <div class="tab-content" id="tab-profile">
+            <div class="profile-container">
+              <div class="profile-hero-avatar">AS</div>
+              <h3 style="font-size:20px; font-weight:700;">Aarav Sharma</h3>
+              <p style="font-size:13px; color:var(--primary-dark); font-weight:500;">+91 98765 43210</p>
+
+              <div class="profile-info-card">
+                <div class="profile-row">
+                  <span style="font-size:20px;">🕊️</span>
+                  <div>
+                    <h5 style="font-size:11px; color:var(--text-muted);">ABOUT</h5>
+                    <p style="font-size:14px; font-weight:500;">Baat karo, dil se. Built with Namasty!</p>
+                  </div>
+                </div>
+                <div class="profile-row">
+                  <span style="font-size:20px;">🔒</span>
+                  <div>
+                    <h5 style="font-size:11px; color:var(--text-muted);">SECURITY</h5>
+                    <p style="font-size:14px; font-weight:500;">Signal Protocol E2EE Active</p>
+                  </div>
+                </div>
+                <div class="profile-row">
+                  <span style="font-size:20px;">🛡️</span>
+                  <div>
+                    <h5 style="font-size:11px; color:var(--text-muted);">APP LOCK</h5>
+                    <p style="font-size:14px; font-weight:500;">Biometric Fingerprint Enabled</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ACTIVE CONVERSATION SUBVIEW -->
+          <div class="chat-conversation-view" id="conversationView">
+            <div class="convo-top-bar">
+              <button class="back-btn" onclick="closeConversation()">
+                ←
+              </button>
+              <div class="convo-user-meta" onclick="alert('Opening contact info')">
+                <div class="convo-avatar" id="convoAvatar">PP</div>
+                <div class="convo-name">
+                  <h4 id="convoTitle">Priya Patel</h4>
+                  <p id="convoSubtitle">Online</p>
+                </div>
+              </div>
+              <button class="action-icon-btn" onclick="alert('Voice calling...')">📞</button>
+              <button class="action-icon-btn" onclick="alert('Starting WebRTC video...')">📹</button>
+            </div>
+
+            <div class="convo-messages-area" id="convoMessages">
+              <div class="e2ee-pill">
+                🔒 Messages are end-to-end encrypted with Signal Protocol. No one outside this chat can read them.
+              </div>
+
+              <div class="msg-bubble msg-received">
+                Namasty Aarav! Have you tested the new Sky Blue theme in Phase 4?
+                <div class="msg-meta">10:40 AM</div>
+              </div>
+
+              <div class="msg-bubble msg-sent">
+                Yes! 100% original Aasmani palette, zero green, and buttery smooth sidebar drawer.
+                <div class="msg-meta">10:41 AM • ✓✓</div>
+              </div>
+
+              <!-- Voice message bubble -->
+              <div class="msg-bubble msg-sent voice-bubble">
+                <button class="voice-play-btn" onclick="togglePlayVoice(this)">▶</button>
+                <div class="waveform-bars">
+                  <div class="wave-bar" style="height:8px;"></div>
+                  <div class="wave-bar" style="height:16px;"></div>
+                  <div class="wave-bar" style="height:22px;"></div>
+                  <div class="wave-bar" style="height:12px;"></div>
+                  <div class="wave-bar" style="height:18px;"></div>
+                  <div class="wave-bar" style="height:10px;"></div>
+                  <div class="wave-bar" style="height:14px;"></div>
+                </div>
+                <span class="speed-tag">1.5x</span>
+                <div class="msg-meta">✓✓</div>
+              </div>
+            </div>
+
+            <!-- Chat Input Bar -->
+            <div class="chat-input-bar">
+              <button class="action-icon-btn" onclick="alert('Attachment picker opened: Camera, Gallery, Audio, Doc, Location, Contact')">📎</button>
+              <div class="chat-input-field">
+                <input type="text" id="chatInput" placeholder="Namasty! Baat karo..." onkeydown="if(event.key==='Enter') sendChatMessage()">
+                <button class="action-icon-btn" style="width:28px; height:28px;" onclick="alert('Emoji picker: ❤️ 👍 😂 😮 🙏')">😊</button>
+              </div>
+              <button class="send-msg-btn" onclick="sendChatMessage()">➤</button>
+            </div>
+          </div>
+
+          <!-- FULL-SCREEN STORY VIEWER -->
+          <div class="story-viewer-modal" id="storyViewer">
+            <div class="story-progress-bar">
+              <div class="progress-segment"><div class="progress-fill" id="storyProgress"></div></div>
+            </div>
+            <div class="story-user-header">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div class="chat-avatar" id="storyUserAvatar" style="width:36px; height:36px; font-size:14px;">PP</div>
+                <div>
+                  <h5 id="storyUserName" style="font-size:14px;">Priya Patel</h5>
+                  <p id="storyUserTime" style="font-size:11px; opacity:0.8;">Today, 10:00 AM</p>
+                </div>
+              </div>
+              <button style="background:transparent; border:none; color:white; font-size:20px; cursor:pointer;" onclick="closeStoryViewer()">✕</button>
+            </div>
+            <div class="story-body-content" id="storyBody">
+              Status Story Content
+            </div>
+            <div style="text-align:center; font-size:12px; opacity:0.8; padding:8px;">
+              👁️ Viewed by 18 contacts
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Web Admin Dashboard Panel -->
+    <div class="admin-portal-view" id="adminPortalView">
+      <div style="padding: 28px 36px; width:100%;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+          <div>
+            <h2 style="font-size:24px; font-weight:700; color:var(--text-main);">Namasty Web Admin Dashboard</h2>
+            <p style="font-size:13px; color:var(--text-muted);">Real-time monitoring, analytics, and moderation suite</p>
+          </div>
+          <span style="background:#E8F8F5; color:#2ECC71; padding:6px 14px; border-radius:20px; font-weight:600; font-size:12px;">● Live Node.js & MongoDB</span>
+        </div>
+
+        <!-- Metric Cards -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-bottom:28px;">
+          <div style="background:var(--primary-light); padding:18px; border-radius:18px; border:1px solid var(--border-color);">
+            <div style="font-size:12px; color:var(--primary-dark); font-weight:600;">TOTAL USERS</div>
+            <div style="font-size:28px; font-weight:700; color:var(--text-main); margin-top:4px;">1,428</div>
+            <div style="font-size:11px; color:#2ECC71; margin-top:4px;">↑ +14% this week</div>
+          </div>
+          <div style="background:var(--primary-light); padding:18px; border-radius:18px; border:1px solid var(--border-color);">
+            <div style="font-size:12px; color:var(--primary-dark); font-weight:600;">ACTIVE CHATS</div>
+            <div style="font-size:28px; font-weight:700; color:var(--text-main); margin-top:4px;">684</div>
+            <div style="font-size:11px; color:var(--primary-dark); margin-top:4px;">100% Signal E2EE</div>
+          </div>
+          <div style="background:var(--primary-light); padding:18px; border-radius:18px; border:1px solid var(--border-color);">
+            <div style="font-size:12px; color:var(--primary-dark); font-weight:600;">MESSAGES TODAY</div>
+            <div style="font-size:28px; font-weight:700; color:var(--text-main); margin-top:4px;">14,920</div>
+            <div style="font-size:11px; color:var(--text-muted); margin-top:4px;">Redis Pub/Sub</div>
+          </div>
+          <div style="background:var(--primary-light); padding:18px; border-radius:18px; border:1px solid var(--border-color);">
+            <div style="font-size:12px; color:var(--primary-dark); font-weight:600;">WEBRTC CALLS</div>
+            <div style="font-size:28px; font-weight:700; color:var(--text-main); margin-top:4px;">38</div>
+            <div style="font-size:11px; color:#2ECC71; margin-top:4px;">STUN / TURN Active</div>
+          </div>
+        </div>
+
+        <!-- Users Table -->
+        <h3 style="font-size:17px; font-weight:700; margin-bottom:14px; color:var(--text-main);">Registered Accounts</h3>
+        <table style="width:100%; border-collapse:collapse; background:var(--surface-light); border:1px solid var(--border-color); border-radius:14px; overflow:hidden;">
+          <thead>
+            <tr style="background:var(--primary-light); text-align:left; font-size:13px; color:var(--text-muted);">
+              <th style="padding:12px 16px;">User</th>
+              <th style="padding:12px 16px;">Phone</th>
+              <th style="padding:12px 16px;">Status</th>
+              <th style="padding:12px 16px;">Action</th>
+            </tr>
+          </thead>
+          <tbody style="font-size:14px;">
+            <tr style="border-bottom:1px solid var(--border-color);">
+              <td style="padding:14px 16px; font-weight:600;">Aarav Sharma</td>
+              <td style="padding:14px 16px;">+91 98765 43210</td>
+              <td style="padding:14px 16px;"><span style="color:#2ECC71; font-weight:600;">Active</span></td>
+              <td style="padding:14px 16px;"><button style="background:var(--danger); color:white; border:none; padding:6px 12px; border-radius:8px; cursor:pointer;" onclick="alert('User suspended')">Suspend</button></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-color);">
+              <td style="padding:14px 16px; font-weight:600;">Priya Patel</td>
+              <td style="padding:14px 16px;">+91 98765 43211</td>
+              <td style="padding:14px 16px;"><span style="color:#2ECC71; font-weight:600;">Active</span></td>
+              <td style="padding:14px 16px;"><button style="background:var(--danger); color:white; border:none; padding:6px 12px; border-radius:8px; cursor:pointer;" onclick="alert('User suspended')">Suspend</button></td>
+            </tr>
+            <tr>
+              <td style="padding:14px 16px; font-weight:600;">Rohan Verma</td>
+              <td style="padding:14px 16px;">+91 98765 43212</td>
+              <td style="padding:14px 16px;"><span style="color:#2ECC71; font-weight:600;">Active</span></td>
+              <td style="padding:14px 16px;"><button style="background:var(--danger); color:white; border:none; padding:6px 12px; border-radius:8px; cursor:pointer;" onclick="alert('User suspended')">Suspend</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Tab switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      const activeTab = document.getElementById('tab-' + tabId);
+      if (activeTab) activeTab.classList.add('active');
+
+      document.querySelectorAll('.drawer-item').forEach(el => el.classList.remove('active'));
+      const activeDrawerItem = Array.from(document.querySelectorAll('.drawer-item')).find(el => el.innerText.toLowerCase().includes(tabId));
+      if (activeDrawerItem) activeDrawerItem.classList.add('active');
+
+      const titles = {
+        chats: 'Chats',
+        status: 'Status Stories',
+        groups: 'Group Chats',
+        calls: 'Calls & WebRTC',
+        profile: 'My Profile'
+      };
+      document.getElementById('screenTitle').innerText = titles[tabId] || 'Namasty';
+      closeSidebar();
+    }
+
+    // Sidebar drawer controls
+    function openSidebar() {
+      document.getElementById('sidebarDrawer').classList.add('open');
+      document.getElementById('sidebarOverlay').classList.add('open');
+    }
+    function closeSidebar() {
+      document.getElementById('sidebarDrawer').classList.remove('open');
+      document.getElementById('sidebarOverlay').classList.remove('open');
+    }
+
+    // Active conversation controls
+    function openConversation(name, status, initials) {
+      document.getElementById('convoTitle').innerText = name;
+      document.getElementById('convoSubtitle').innerText = status;
+      document.getElementById('convoAvatar').innerText = initials;
+      document.getElementById('conversationView').classList.add('open');
+    }
+    function closeConversation() {
+      document.getElementById('conversationView').classList.remove('open');
+    }
+
+    // Chat messaging
+    function sendChatMessage() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const area = document.getElementById('convoMessages');
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      // Append sent bubble
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'msg-bubble msg-sent';
+      msgDiv.innerHTML = `${text}<div class="msg-meta">${timeStr} • ✓✓</div>`;
+      area.appendChild(msgDiv);
+      input.value = '';
+      area.scrollTop = area.scrollHeight;
+
+      // Simulated auto-reply
+      setTimeout(() => {
+        document.getElementById('convoSubtitle').innerText = 'Priya is typing...';
+      }, 700);
+
+      setTimeout(() => {
+        document.getElementById('convoSubtitle').innerText = 'Online';
+        const replyDiv = document.createElement('div');
+        replyDiv.className = 'msg-bubble msg-received';
+        replyDiv.innerHTML = `Namasty! Received your message: "${text}". The Sky Blue UI looks gorgeous! 🕊️<div class="msg-meta">${timeStr}</div>`;
+        area.appendChild(replyDiv);
+        area.scrollTop = area.scrollHeight;
+      }, 2000);
+    }
+
+    // Voice Note Player Simulation
+    function togglePlayVoice(btn) {
+      if (btn.innerText === '▶') {
+        btn.innerText = '❚❚';
+        const bars = btn.parentElement.querySelectorAll('.wave-bar');
+        const interval = setInterval(() => {
+          bars.forEach(b => {
+            b.style.height = Math.floor(Math.random() * 20 + 4) + 'px';
+          });
+        }, 150);
+        setTimeout(() => {
+          clearInterval(interval);
+          btn.innerText = '▶';
+        }, 4000);
+      } else {
+        btn.innerText = '▶';
+      }
+    }
+
+    // Status Story Viewer
+    let storyInterval = null;
+    function launchStatusViewer(name, time, content) {
+      document.getElementById('storyUserName').innerText = name;
+      document.getElementById('storyUserTime').innerText = time;
+      document.getElementById('storyBody').innerText = content;
+      document.getElementById('storyViewer').classList.add('open');
+
+      const progress = document.getElementById('storyProgress');
+      progress.style.width = '0%';
+      let percent = 0;
+      clearInterval(storyInterval);
+      storyInterval = setInterval(() => {
+        percent += 2;
+        progress.style.width = percent + '%';
+        if (percent >= 100) {
+          clearInterval(storyInterval);
+          closeStoryViewer();
+        }
+      }, 80);
+    }
+    function closeStoryViewer() {
+      clearInterval(storyInterval);
+      document.getElementById('storyViewer').classList.remove('open');
+    }
+
+    // View Switcher (Mobile vs Admin)
+    function switchMainView(view) {
+      const mobileContainer = document.getElementById('deviceContainer');
+      const adminContainer = document.getElementById('adminPortalView');
+      const btnMobile = document.getElementById('btnViewMobile');
+      const btnAdmin = document.getElementById('btnViewAdmin');
+
+      if (view === 'mobile') {
+        mobileContainer.style.display = 'flex';
+        adminContainer.classList.remove('active');
+        btnMobile.classList.add('active');
+        btnAdmin.classList.remove('active');
+      } else {
+        mobileContainer.style.display = 'none';
+        adminContainer.classList.add('active');
+        btnAdmin.classList.add('active');
+        btnMobile.classList.remove('active');
+      }
+    }
+
+    // Dark/Light Theme Toggle
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      if (current === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    }
+
+    // Fullscreen Toggle
+    function toggleFullscreen() {
+      document.getElementById('deviceContainer').classList.toggle('fullscreen-mode');
+    }
+
+    // Settings Modal
+    function openSettingsModal() {
+      alert("Settings & Privacy Hub:\n\n• App Lock: Biometric / PIN (Enabled)\n• Block Screenshots: Active\n• Signal Protocol E2EE: Active\n• Language: English / हिन्दी / Hinglish\n• Chat Backup: Cloud Encrypted (AES-256)");
+    }
+
+    // Simulate Incoming Call
+    function simulateIncomingCall() {
+      if (confirm("🔔 INCOMING CALL\n\nPriya Patel is requesting a WebRTC Video Call...\n\nTap OK to Accept or Cancel to Decline")) {
+        alert("📞 Call Connected! Peer-to-peer WebRTC connection established via STUN/TURN.");
+      }
+    }
+
+    function openNewChatModal() {
+      alert("Contacts List:\n1. Priya Patel (+91 98765 43211)\n2. Rohan Verma (+91 98765 43212)\n3. Ananya Sen (+91 98765 43213)");
+    }
+
+    function filterChats(query) {
+      const cards = document.querySelectorAll('#chatListContainer .chat-card');
+      cards.forEach(c => {
+        const text = c.innerText.toLowerCase();
+        c.style.display = text.includes(query.toLowerCase()) ? 'flex' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>
